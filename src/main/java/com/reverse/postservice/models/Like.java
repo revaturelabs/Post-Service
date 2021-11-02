@@ -14,4 +14,8 @@ public class Like implements Serializable {
 
     @EmbeddedId
     private LikeId likeId;
+
+    public Like() {
+
+    }
 }
