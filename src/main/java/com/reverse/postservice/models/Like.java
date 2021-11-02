@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Table(name = "user_likes")
 @Getter
 @AllArgsConstructor
-public class Like {
+public class Like implements Serializable {
 
     @EmbeddedId
     private LikeId likeId;
