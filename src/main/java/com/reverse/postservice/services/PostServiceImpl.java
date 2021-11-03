@@ -27,7 +27,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void createPost(Post post) {
-        Integer posterId = post.getPoster_id();
+        Integer posterId = post.getPoster().getId();
         String title = post.getTitle();
         String body = post.getBody();
         Timestamp creationDate = new Timestamp(System.currentTimeMillis());

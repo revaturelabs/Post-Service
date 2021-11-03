@@ -20,8 +20,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void commentOnPost(Comment comment) {
-        int postId = comment.getPostId();
-        int userId = comment.getUserId();
+        int postId = comment.getPost().getId();
+        int userId = comment.getCommenter().getId();
         String message = comment.getMessage();
         Timestamp created = new Timestamp(System.currentTimeMillis());
         commentDao.postComment(postId, userId, message, created);

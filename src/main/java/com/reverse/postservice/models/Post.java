@@ -1,37 +1,38 @@
 package com.reverse.postservice.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table(name = "posts")
+@Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Post {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "poster_id")
-    private Integer poster_id;
+    @ManyToOne
+    @JoinColumn(name = "poster_id")
+    private User poster;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 100)
     private String title;
 
-    @Column(name = "body")
+    @Lob
+    @Column(name = "body", nullable = false)
     private String body;
 
-    @Column(name = "created")
-    private Timestamp createdDate;
+    @Column(name = "created", nullable = false)
+    private Instant created;
 
     @Column(name = "last_edited")
-    private Timestamp last_edited;
+    private Instant lastEdited;
 }
