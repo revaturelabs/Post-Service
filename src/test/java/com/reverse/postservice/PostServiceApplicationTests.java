@@ -11,9 +11,4 @@ class PostServiceApplicationTests {
 	void contextLoads() {
 		assertTrue(true);
 	}
-
-	@Test
-	void nothing(){
-		assertTrue(true);
-	}
 }
