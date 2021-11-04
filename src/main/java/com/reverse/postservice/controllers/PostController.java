@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/posts") //This being posts syncs with the current implementation of the gateway
 public class PostController {
@@ -67,6 +69,11 @@ public class PostController {
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/recent")
+    public List<Post> getRecent(){
+        return postService.getRecent(2);
     }
 
     @GetMapping()
