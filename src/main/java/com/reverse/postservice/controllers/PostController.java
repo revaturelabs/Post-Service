@@ -69,6 +69,7 @@ public class PostController {
         }
     }
 
+    @GetMapping()
     public ResponseEntity getAllPosts(){
         try {
             postService.getAllPosts();
