@@ -36,24 +36,4 @@ public class Comment {
 
     @Column(name = "created", nullable = false)
     private Instant created;
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setCommenter(User commenter) {
-        this.commenter = commenter;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
