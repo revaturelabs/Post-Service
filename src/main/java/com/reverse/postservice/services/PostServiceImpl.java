@@ -8,7 +8,6 @@ import com.reverse.postservice.repositories.PostDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
