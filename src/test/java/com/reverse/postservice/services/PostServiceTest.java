@@ -1,9 +1,6 @@
 package com.reverse.postservice.services;
 
-import com.reverse.postservice.models.Like;
-import com.reverse.postservice.models.LikeId;
-import com.reverse.postservice.models.Post;
-import com.reverse.postservice.models.User;
+import com.reverse.postservice.models.*;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
@@ -15,16 +12,20 @@ import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class PostServiceTest {
     private PostService testPostService;
+    private PostDao mockPostDao;
+    private CommentDao mockCommentDao;
+    private LikeDao mockLikeDao;
 
     @BeforeEach
     public void init() {
-        PostDao mockPostDao = mock(PostDao.class);
-        CommentDao mockCommentDao = mock(CommentDao.class);
-        LikeDao mockLikeDao = mock(LikeDao.class);
+        mockPostDao = mock(PostDao.class);
+        mockCommentDao = mock(CommentDao.class);
+        mockLikeDao = mock(LikeDao.class);
         testPostService = new PostServiceImpl(mockPostDao, mockLikeDao, mockCommentDao);
     }
 
@@ -36,6 +37,8 @@ public class PostServiceTest {
 
         User testUser = new User();
         testUser.setId(1);
+        assertEquals(1,testUser.getId());
+
         testPost.setPoster(testUser);
 
         testPostService.createPost(testPost);
