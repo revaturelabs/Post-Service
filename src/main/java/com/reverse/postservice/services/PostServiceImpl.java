@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Component(value = "PostService")
@@ -27,17 +28,14 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void createPost(Post post) {
-        Integer posterId = post.getPoster().getId();
-        String title = post.getTitle();
-        String body = post.getBody();
-        Timestamp creationDate = new Timestamp(System.currentTimeMillis());
-        Timestamp lastEditedDate = new Timestamp(System.currentTimeMillis());
-        this.postDao.createPost(posterId, title, body, creationDate, lastEditedDate);
+        post.setCreated(Instant.now());
+        post.setLastEdited(Instant.now());
+        this.postDao.save(post);
     }
 
     @Override
     public Post getPostById(int postId) {
-        return this.postDao.getPostById(postId);
+        return this.postDao.getById(postId);
     }
 
     @Override
@@ -47,19 +45,13 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void updatePost(Post post) {
-        Integer postId = post.getId();
-
-        if(postId != null) {
-            String title = post.getTitle();
-            String body = post.getBody();
-            Timestamp lastEditedDate = new Timestamp(System.currentTimeMillis());
-            this.postDao.updatePost(postId, title, body, lastEditedDate);
-        }
+        post.setLastEdited(Instant.now());
+        this.postDao.save(post);
     }
 
     @Override
     public void deletePost(int postId) {
-        this.postDao.deletePost(postId);
+        this.postDao.deleteById(postId);
     }
 
     @Override
