@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.services.PostService;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(value = PostController.class)
 public class PostControllerTest {
     @Autowired private MockMvc mockMvc;
