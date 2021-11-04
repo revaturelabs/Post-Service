@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Repository
 public interface PostDao extends JpaRepository<Post, Integer> {
@@ -23,7 +24,7 @@ public interface PostDao extends JpaRepository<Post, Integer> {
     @Query(value = "UPDATE public.posts\n" +
             "SET title= :title, body= :body, last_edited= :lastEditDate\n" +
             "WHERE id= :id", nativeQuery = true)
-    void updatePost(@Param("id") int id, @Param("title") String title, @Param("body") String body, @Param("lastEditDate") Timestamp lastEdited);
+    void updatePost(@Param("id") int id, @Param("title") String title, @Param("body") String body, @Param("lastEditDate") Instant lastEdited);
 
     @Modifying
     @Query(value = "DELETE FROM posts\n" +

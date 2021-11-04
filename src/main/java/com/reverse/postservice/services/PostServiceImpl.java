@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Component(value = "PostService")
@@ -52,7 +53,7 @@ public class PostServiceImpl implements PostService{
         if(postId != null) {
             String title = post.getTitle();
             String body = post.getBody();
-            Timestamp lastEditedDate = new Timestamp(System.currentTimeMillis());
+            Instant lastEditedDate = Instant.now();
             this.postDao.updatePost(postId, title, body, lastEditedDate);
         }
     }
