@@ -1,9 +1,9 @@
 package com.reverse.postservice.controllers;
 
-import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.services.PostService;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void createPost() throws Exception {
+    public void createPostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -44,7 +44,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void getPost() throws Exception {
+    public void getPostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -57,7 +57,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void likePost() throws Exception {
+    public void likePostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -70,7 +70,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void editPost() throws Exception {
+    public void editPostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -83,7 +83,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void deletePost() throws Exception {
+    public void deletePostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -96,7 +96,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void getAllPosts() throws Exception {
+    public void getAllPostsTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
