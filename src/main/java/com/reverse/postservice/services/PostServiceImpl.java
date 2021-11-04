@@ -40,7 +40,6 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void likePost(Like like) {
-
     }
 
     @Override
