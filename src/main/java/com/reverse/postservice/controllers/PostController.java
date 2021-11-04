@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "posts") //This being posts syncs with the current implementation of the gateway
+@RequestMapping(path = "/posts") //This being posts syncs with the current implementation of the gateway
 public class PostController {
 
     PostService postService;

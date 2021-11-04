@@ -27,7 +27,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void createPost() throws Exception {
+    public void createPostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -40,7 +40,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void getPost() throws Exception {
+    public void getPostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -53,7 +53,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void likePost() throws Exception {
+    public void likePostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -66,7 +66,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void editPost() throws Exception {
+    public void editPostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -79,7 +79,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void deletePost() throws Exception {
+    public void deletePostTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
@@ -92,7 +92,7 @@ public class PostControllerTest {
     }
 
     @Test
-    public void getAllPosts() throws Exception {
+    public void getAllPostsTest() throws Exception {
         Post post = new Post();
 
         mockMvc.perform(
