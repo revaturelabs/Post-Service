@@ -1,14 +1,9 @@
 package com.reverse.postservice.models;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.awt.*;
 import java.time.Instant;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 public class ModelsTest {
     String testString = "Test";
     int testNum = 1;
@@ -49,12 +44,43 @@ public class ModelsTest {
 
     @Test
     void commentTest(){
+        Comment comment = new Comment();
+        Comment allArgs = new Comment(testNum,testPost,testUser,testString,testTime);
+
+        comment.setId(testNum);
+        assertEquals(testNum, comment.getId());
+        assertEquals(testNum, allArgs.getId());
+
+        comment.setCommenter(testUser);
+        assertEquals(testUser, comment.getCommenter());
+        assertEquals(testUser, allArgs.getCommenter());
+
+        comment.setCreated(testTime);
+        assertEquals(testTime, comment.getCreated());
+        assertEquals(testTime, allArgs.getCreated());
+
+        comment.setMessage(testString);
+        assertEquals(testString, comment.getMessage());
+        assertEquals(testString, allArgs.getMessage());
+
+        comment.setPost(testPost);
+        assertEquals(testPost, comment.getPost());
+        assertEquals(testPost, allArgs.getPost());
 
     }
 
     @Test
     void genderTest(){
+        Gender gender = new Gender();
+        Gender allArgs = new Gender(testNum,testString);
 
+        gender.setId(testNum);
+        assertEquals(testNum,gender.getId());
+        assertEquals(testNum,allArgs.getId());
+
+        gender.setGender(testString);
+        assertEquals(testString,gender.getGender());
+        assertEquals(testString,allArgs.getGender());
     }
 
     @Test
@@ -83,7 +109,16 @@ public class ModelsTest {
 
     @Test
     void likeIdTest(){
+        LikeId likeId = new LikeId();
+        LikeId allArgs = new LikeId(testNum,testNum);
 
+        likeId.setUserId(testNum);
+        assertEquals(testNum,likeId.getUserId());
+        assertEquals(testNum,allArgs.getUserId());
+
+        likeId.setPostId(testNum);
+        assertEquals(testNum,likeId.getPostId());
+        assertEquals(testNum,allArgs.getPostId());
     }
 
     @Test

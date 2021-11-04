@@ -8,9 +8,6 @@ import com.reverse.postservice.repositories.CommentDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Type;
-import java.sql.Timestamp;
-
 import static org.mockito.Mockito.*;
 
 public class CommentServiceTest {

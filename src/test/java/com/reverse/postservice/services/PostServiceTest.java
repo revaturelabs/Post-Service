@@ -5,27 +5,21 @@ import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
-@SpringBootTest
 public class PostServiceTest {
     private PostService testPostService;
-    private PostDao mockPostDao;
-    private CommentDao mockCommentDao;
-    private LikeDao mockLikeDao;
 
     @BeforeEach
     public void init() {
-        mockPostDao = mock(PostDao.class);
-        mockCommentDao = mock(CommentDao.class);
-        mockLikeDao = mock(LikeDao.class);
+        PostDao mockPostDao = mock(PostDao.class);
+        CommentDao mockCommentDao = mock(CommentDao.class);
+        LikeDao mockLikeDao = mock(LikeDao.class);
         testPostService = new PostServiceImpl(mockPostDao, mockLikeDao, mockCommentDao);
     }
 
