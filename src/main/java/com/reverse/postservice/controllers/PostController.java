@@ -8,6 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/*
+* TODO:
+*  When front-end retrieves a post, we need to return:
+*       -A list of user IDs who liked the post.
+*       -All comments on the post.
+*       -All replies to each comment.
+*
+* TODO:
+*  Add partial loading when retrieving a feed of posts.
+*       -We should have it load in increments of 5, and continue to load in increments of 5
+*        when a "load more" button is pressed.
+* */
+
 @RestController
 @RequestMapping(path = "/posts") //This being posts syncs with the current implementation of the gateway
 public class PostController {
