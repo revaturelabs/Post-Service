@@ -1,6 +1,5 @@
 package com.reverse.postservice.services;
 
-import com.reverse.postservice.mockRepos.MockCommentDao;
 import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.User;
@@ -17,7 +16,7 @@ public class CommentServiceTest {
 
     @BeforeEach
     public void init() {
-        mockCommentDao = mock(MockCommentDao.class);
+        mockCommentDao = mock(CommentDao.class);
         testCommentService = new CommentServiceImpl(mockCommentDao);
     }
 
@@ -39,14 +38,14 @@ public class CommentServiceTest {
     @Test
     public void deleteCommentTest() {
         int id = 1;
-        testCommentService.deleteComment(1);
-        verify(mockCommentDao).deleteComment(1);
+        testCommentService.deleteComment(id);
+        verify(mockCommentDao).deleteById(1);
     }
 
     @Test
     public void getAllCommentsOnPostTest() {
         int id = 1;
         testCommentService.getAllCommentsOnPost(id);
-        verify(mockCommentDao).getAllCommentsOnPost(id);
+        verify(mockCommentDao).getCommentsByPost_Id(id);
     }
 }

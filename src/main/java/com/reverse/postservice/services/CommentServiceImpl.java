@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Component("CommentService")
@@ -20,21 +21,18 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void commentOnPost(Comment comment) {
-        int postId = comment.getPost().getId();
-        int userId = comment.getCommenter().getId();
-        String message = comment.getMessage();
-        Timestamp created = new Timestamp(System.currentTimeMillis());
-        commentDao.postComment(postId, userId, message, created);
+        comment.setCreated(Instant.now());
+        commentDao.save(comment);
     }
 
     @Override
     public void deleteComment(int commentId) {
-        commentDao.deleteComment(commentId);
+        commentDao.deleteById(commentId);
     }
 
     @Override
     public List<Comment> getAllCommentsOnPost(int postId) {
-        return commentDao.getAllCommentsOnPost(postId);
+        return commentDao.getCommentsByPost_Id(postId);
     }
 
 }

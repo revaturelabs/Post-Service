@@ -12,18 +12,5 @@ import java.util.List;
 
 @Repository
 public interface CommentDao extends JpaRepository<Comment, Integer> {
-
-    @Modifying
-    @Query(value = "INSERT INTO post_comments\n" +
-            "(post_id, commenter_id, message, created)\n" +
-            "VALUES(:postId, :userId, :message, :created)", nativeQuery = true)
-    void postComment(@Param("postId") int postId, @Param("userId") int userId, @Param("message") String message, @Param("created") Timestamp createdDate);
-
-    @Modifying
-    @Query(value = "DELETE FROM post_comments\n" +
-            "WHERE id= :id", nativeQuery = true)
-    void deleteComment(@Param("id") int postId);
-
-    @Query(value = "SELECT * FROM post_comments where id = :id", nativeQuery = true)
-    List<Comment> getAllCommentsOnPost(@Param("id") int postId);
+    List<Comment> getCommentsByPost_Id(int postId);
 }
