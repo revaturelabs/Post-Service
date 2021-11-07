@@ -3,6 +3,7 @@ package com.reverse.postservice.controllers;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.Like;
 import com.reverse.postservice.models.dto.FullPost;
+import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.services.PostDtoService;
 import com.reverse.postservice.services.PostService;
 import javafx.geometry.Pos;
@@ -41,9 +42,9 @@ public class PostController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity createPost(@RequestBody Post post) {
+    public ResponseEntity createPost(@RequestBody PostCreationDto post) {
         try {
-            postService.createPost(post);
+            postDtoService.createPost(post);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
