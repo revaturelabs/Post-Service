@@ -1,9 +1,14 @@
-package com.reverse.postservice.models;
+package com.reverse.postservice.models.dto;
 
-import lombok.*;
+import com.reverse.postservice.models.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -11,7 +16,7 @@ import java.time.Instant;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class FullPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +39,13 @@ public class Post {
 
     @Column(name = "last_edited")
     private Instant lastEdited;
+
+    @Transient
+    private Long numberOfLikes;
+
+    @Transient
+    private List<CommentDto> comments;
+
+    @Transient
+    private List<PostImagesDto> images;
 }

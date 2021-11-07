@@ -2,11 +2,17 @@ package com.reverse.postservice.controllers;
 
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.Like;
+import com.reverse.postservice.models.dto.FullPost;
+import com.reverse.postservice.services.PostDtoService;
 import com.reverse.postservice.services.PostService;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /*
 * TODO:
@@ -26,10 +32,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     PostService postService;
+    PostDtoService postDtoService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostDtoService postDtoService) {
         this.postService = postService;
+        this.postDtoService = postDtoService;
     }
 
     @PostMapping(value = "/create")
@@ -43,11 +51,11 @@ public class PostController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Post> getPost(@PathVariable int id) {
-        Post post = this.postService.getPostById(id);
+    public ResponseEntity<FullPost> getPost(@PathVariable int id) {
+        FullPost post = this.postDtoService.getPostById(id);
 
         if(post != null) {
-            return new ResponseEntity(HttpStatus.OK);
+            return ResponseEntity.ok().body(post);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
@@ -83,10 +91,12 @@ public class PostController {
     }
 
     @GetMapping()
-    public ResponseEntity getAllPosts(){
+    public ResponseEntity<List<Post>> getAllPosts(){
+        List<Post> posts;
+
         try {
-            postService.getAllPosts();
-            return new ResponseEntity(HttpStatus.OK);
+            posts = postService.getAllPosts();
+            return ResponseEntity.ok().body(posts);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
