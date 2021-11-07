@@ -1,5 +1,6 @@
 package com.reverse.postservice.models.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reverse.postservice.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,9 +35,11 @@ public class FullPost {
     @Column(name = "body", nullable = false)
     private String body;
 
+    @JsonIgnore
     @Column(name = "created", nullable = false)
     private Instant created;
 
+    @JsonIgnore
     @Column(name = "last_edited")
     private Instant lastEdited;
 

@@ -8,4 +8,6 @@ public interface PostDtoService {
     FullPost getPostById(int postId);
 
     void createPost(PostCreationDto post);
+
+    void updatePost(PostCreationDto post);
 }

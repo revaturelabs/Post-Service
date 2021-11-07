@@ -1,9 +1,6 @@
 package com.reverse.postservice.models.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -11,8 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "posts")
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostCreationDto {
@@ -23,7 +19,7 @@ public class PostCreationDto {
     private Integer id;
 
     @Column(name = "poster_id")
-    private int posterId;
+    private Integer posterId;
 
     @Column(name = "title", length = 100)
     private String title;
