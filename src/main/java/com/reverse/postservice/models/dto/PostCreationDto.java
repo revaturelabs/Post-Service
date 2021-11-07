@@ -24,7 +24,6 @@ public class PostCreationDto {
     @Column(name = "title", length = 100)
     private String title;
 
-    @Lob
     @Column(name = "body", nullable = false)
     private String body;
 

@@ -30,7 +30,6 @@ public class Comment {
     @JoinColumn(name = "commenter_id")
     private User commenter;
 
-    @Lob
     @Column(name = "message", nullable = false)
     private String message;
 

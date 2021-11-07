@@ -39,6 +39,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void likePost(Like like) {
+        this.likeDao.save(like);
     }
 
     @Override

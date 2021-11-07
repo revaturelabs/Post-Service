@@ -1,6 +1,7 @@
 package com.reverse.postservice.controllers;
 
 import com.reverse.postservice.models.Comment;
+import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.services.CommentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ public class CommentControllerTest {
 
     @Test
     public void commentOnPostSucceedTest() {
-        Comment mockComment = mock(Comment.class);
+        CommentCreationDto mockComment = mock(CommentCreationDto.class);
 
         ResponseEntity response = testCommentController.commentOnPost(mockComment);
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
@@ -37,7 +38,7 @@ public class CommentControllerTest {
 
     @Test
     public void commentOnPostFailTest() {
-        Comment mockComment = mock(Comment.class);
+        CommentCreationDto mockComment = mock(CommentCreationDto.class);
 
         when(testCommentController.commentOnPost(mockComment)).thenThrow(new NullPointerException());
 

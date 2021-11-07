@@ -12,10 +12,6 @@ import java.time.Instant;
 @Repository
 public interface PostCreationRepo extends JpaRepository<PostCreationDto, Integer> {
 
-//    @Modifying
-//    @Query(name = "UPDATE posts SET poster_id= :posterId, title= :title, body= :body, last_edited= :edited WHERE id= :id", nativeQuery = true)
-//    void updatePost(@Param("id")int id, @Param("posterId")int posterId, @Param("title")String title, @Param("body")String body, @Param("edited")Instant edited);
-
     @Modifying
     @Query(value = "UPDATE posts SET title= :title, body= :body, last_edited= :edited WHERE id= :id", nativeQuery = true)
     void updatePosts(@Param("id") int id, @Param("title") String title, @Param("body") String body, @Param("edited") Instant edited);

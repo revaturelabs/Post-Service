@@ -1,7 +1,9 @@
 package com.reverse.postservice.services;
 
 import com.reverse.postservice.models.Comment;
+import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.repositories.CommentDao;
+import com.reverse.postservice.repositories.dto.CommentCreationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,17 +14,19 @@ import java.util.List;
 @Component("CommentService")
 public class CommentServiceImpl implements CommentService{
 
-    CommentDao commentDao;
+    private CommentDao commentDao;
+    private CommentCreationRepo commentCreationRepo;
 
     @Autowired
-    public CommentServiceImpl(CommentDao commentDao) {
+    public CommentServiceImpl(CommentDao commentDao, CommentCreationRepo commentCreationRepo) {
         this.commentDao = commentDao;
+        this.commentCreationRepo = commentCreationRepo;
     }
 
     @Override
-    public void commentOnPost(Comment comment) {
+    public void commentOnPost(CommentCreationDto comment) {
         comment.setCreated(Instant.now());
-        commentDao.save(comment);
+        this.commentCreationRepo.save(comment);
     }
 
     @Override
