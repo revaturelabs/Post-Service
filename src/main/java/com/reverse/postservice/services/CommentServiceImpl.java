@@ -6,10 +6,8 @@ import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.dto.CommentCreationRepo;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 

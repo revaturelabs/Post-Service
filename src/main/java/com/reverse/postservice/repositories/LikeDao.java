@@ -1,7 +1,6 @@
 package com.reverse.postservice.repositories;
 
 import com.reverse.postservice.models.Like;
-import lombok.extern.java.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
