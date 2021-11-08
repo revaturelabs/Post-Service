@@ -29,6 +29,9 @@ import java.util.List;
 *        when a "load more" button is pressed.
 * */
 
+/**
+ * The Post Controller handles requests related to creating, retrieving, liking, editing, and deleting posts.
+ */
 @RestController
 @RequestMapping(path = "/posts") //This being posts syncs with the current implementation of the gateway
 public class PostController {
@@ -43,6 +46,11 @@ public class PostController {
         this.postDtoService = postDtoService;
     }
 
+    /**
+     * Create a new post.
+     * @param post Post object containing post details such as title, message body, poster, etc.
+     * @return Represents the HTTP response.
+     */
     @PostMapping(value = "/create")
     public ResponseEntity createPost(@RequestBody PostCreationDto post) {
         try {
@@ -53,6 +61,11 @@ public class PostController {
         }
     }
 
+    /**
+     * Retrieve a specific post by Id.
+     * @param id The Id of the post.
+     * @return Represents the HTTP response.
+     */
     @GetMapping(value = "/{id}")
     public ResponseEntity<FullPost> getPost(@PathVariable int id) {
         FullPost post = this.postDtoService.getPostById(id);
@@ -63,6 +76,11 @@ public class PostController {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Like a post.
+     * @param like A Like object containing the liked post id and the user's id of who liked the post.
+     * @return Represents the HTTP response.
+     */
     @PostMapping(value = "/like")
     public ResponseEntity likePost(@RequestBody Like like) {
         try {
@@ -73,6 +91,11 @@ public class PostController {
         }
     }
 
+    /**
+     * Edit an existing post.
+     * @param post The post to be edited.
+     * @return Represents the HTTP response.
+     */
     @PatchMapping(value = "/edit")
     public ResponseEntity editPost(@RequestBody PostCreationDto post) {
         try {
@@ -83,6 +106,11 @@ public class PostController {
         }
     }
 
+    /**
+     * Delete a specific post by Id.
+     * @param id The Id of the post to delete.
+     * @return Represents the HTTP response.
+     */
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deletePost(@PathVariable int id) {
         try {
@@ -93,6 +121,10 @@ public class PostController {
         }
     }
 
+    /**
+     * Get all posts from the database.
+     * @return Represents the HTTP response.
+     */
     @GetMapping()
     public ResponseEntity<List<Post>> getAllPosts(){
         List<Post> posts;

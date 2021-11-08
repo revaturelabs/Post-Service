@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The Comment Controller handles requests related to comments on posts such as adding, deleting, and retrieving.
+ */
 @RestController
 @RequestMapping(path = "/comments")
 public class CommentController {
@@ -21,6 +24,11 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    /**
+     * Will add a comment to a post.
+     * @param comment The comment object containing details of the comment.
+     * @return Represents the HTTP response.
+     */
     @PostMapping(value = "/comment")
     public ResponseEntity commentOnPost(@RequestBody CommentCreationDto comment) {
         try {
@@ -33,6 +41,11 @@ public class CommentController {
 
     }
 
+    /**
+     * Delete a comment from a post.
+     * @param id The Id of the comment.
+     * @return Represents the HTTP response.
+     */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity deleteComment(@PathVariable int id) {
         try {
@@ -43,6 +56,11 @@ public class CommentController {
         }
     }
 
+    /**
+     * Retrieves all comments on a single post.
+     * @param id The Id of the post.
+     * @return Represents the HTTP response.
+     */
     @GetMapping(value = "/post/{id}")
     public ResponseEntity<List<Comment>> getAllCommentsOnPost(@PathVariable int id) {
         List<Comment> comments = commentService.getAllCommentsOnPost(id);
