@@ -18,10 +18,12 @@ import java.util.List;
 public class CommentController {
 
     CommentService commentService;
+    ValidationUtils validationUtils;
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, ValidationUtils validationUtils) {
         this.commentService = commentService;
+        this.validationUtils = validationUtils;
     }
 
     /**
@@ -30,8 +32,10 @@ public class CommentController {
      * @return Represents the HTTP response.
      */
     @PostMapping(value = "/comment")
-    public ResponseEntity commentOnPost(@RequestBody CommentCreationDto comment) {
+    public ResponseEntity commentOnPost(@RequestBody CommentCreationDto comment, @RequestHeader (name="Authorization") String token) {
         try {
+            validationUtils.validateJwt(token);
+
             commentService.commentOnPost(comment);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -47,8 +51,10 @@ public class CommentController {
      * @return Represents the HTTP response.
      */
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity deleteComment(@PathVariable int id) {
+    public ResponseEntity deleteComment(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
         try {
+            validationUtils.validateJwt(token);
+
             commentService.deleteComment(id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -62,14 +68,20 @@ public class CommentController {
      * @return Represents the HTTP response.
      */
     @GetMapping(value = "/post/{id}")
-    public ResponseEntity<List<Comment>> getAllCommentsOnPost(@PathVariable int id) {
-        List<Comment> comments = commentService.getAllCommentsOnPost(id);
+    public ResponseEntity<List<Comment>> getAllCommentsOnPost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
+        try {
+            validationUtils.validateJwt(token);
 
-        if(comments != null) {
-            if(comments.size() > 0) {
-                return ResponseEntity.ok().body(comments);
+            List<Comment> comments = commentService.getAllCommentsOnPost(id);
+
+            if(comments != null) {
+                if(comments.size() > 0) {
+                    return ResponseEntity.ok().body(comments);
+                }
             }
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }
