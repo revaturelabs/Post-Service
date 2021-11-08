@@ -34,11 +34,12 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post getPostById(int postId) {
-        return this.postDao.getById(postId);
+        return this.postDao.findById(postId).get();
     }
 
     @Override
     public void likePost(Like like) {
+        this.likeDao.save(like);
     }
 
     @Override
