@@ -8,6 +8,9 @@ import com.reverse.postservice.services.PostDtoService;
 import com.reverse.postservice.services.PostService;
 import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +39,8 @@ public class PostController {
     PostDtoService postDtoService;
 
     @Autowired
-    public PostController(PostService postService, PostDtoService postDtoService) {
+    @Lazy
+    public PostController(PostService postService, @Qualifier("PostDtoService") PostDtoService postDtoService) {
         this.postService = postService;
         this.postDtoService = postDtoService;
     }

@@ -4,20 +4,23 @@ import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.dto.CommentCreationRepo;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
-@Component("CommentService")
+@Service("CommentService")
 public class CommentServiceImpl implements CommentService{
 
     private CommentDao commentDao;
     private CommentCreationRepo commentCreationRepo;
 
     @Autowired
+    @Generated
     public CommentServiceImpl(CommentDao commentDao, CommentCreationRepo commentCreationRepo) {
         this.commentDao = commentDao;
         this.commentCreationRepo = commentCreationRepo;

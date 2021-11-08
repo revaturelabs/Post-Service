@@ -7,12 +7,15 @@ import com.reverse.postservice.repositories.dto.CommentDtoDao;
 import com.reverse.postservice.repositories.dto.FullPostDao;
 import com.reverse.postservice.repositories.dto.PostCreationRepo;
 import com.reverse.postservice.repositories.dto.PostImagesDtoDao;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
-@Component(value = "PostDtoService")
+@Service(value = "PostDtoService")
 public class PostDtoServiceImpl implements PostDtoService{
 
     private FullPostDao fullPostDao;
@@ -22,6 +25,7 @@ public class PostDtoServiceImpl implements PostDtoService{
     private LikeDao likeDao;
 
     @Autowired
+    @Generated
     public PostDtoServiceImpl(FullPostDao fullPostDao, PostCreationRepo postCreationDao, CommentDtoDao commentDao, PostImagesDtoDao postImagesDao, LikeDao likeDao) {
         this.fullPostDao = fullPostDao;
         this.postCreationDao = postCreationDao;
