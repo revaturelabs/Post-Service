@@ -4,6 +4,7 @@ import com.reverse.postservice.models.*;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,15 +14,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 public class PostServiceTest {
-    private PostService testPostService;
+    private static PostService testPostService;
 
-    @BeforeEach
-    public void init() {
+    @BeforeAll
+    public static void init() {
         PostDao mockPostDao = mock(PostDao.class);
         CommentDao mockCommentDao = mock(CommentDao.class);
         LikeDao mockLikeDao = mock(LikeDao.class);
         testPostService = new PostServiceImpl(mockPostDao, mockLikeDao, mockCommentDao);
-
     }
 
     @Test
