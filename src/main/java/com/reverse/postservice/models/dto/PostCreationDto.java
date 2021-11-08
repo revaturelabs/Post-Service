@@ -1,26 +1,25 @@
-package com.reverse.postservice.models;
+package com.reverse.postservice.models.dto;
 
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class PostCreationDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "poster_id")
-    private User poster;
+    @Column(name = "poster_id")
+    private Integer posterId;
 
     @Column(name = "title", length = 100)
     private String title;
@@ -33,4 +32,7 @@ public class Post {
 
     @Column(name = "last_edited")
     private Instant lastEdited;
+
+    @Transient
+    private List<ImageCreationDto> images;
 }

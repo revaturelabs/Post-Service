@@ -1,9 +1,10 @@
 package com.reverse.postservice.services;
 
-import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.User;
+import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.repositories.CommentDao;
+import com.reverse.postservice.repositories.dto.CommentCreationRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,8 @@ public class CommentServiceTest {
     @BeforeEach
     public void init() {
         mockCommentDao = mock(CommentDao.class);
-        testCommentService = new CommentServiceImpl(mockCommentDao);
+        CommentCreationRepo mockCommentCreationRepo = mock(CommentCreationRepo.class);
+        testCommentService = new CommentServiceImpl(mockCommentDao, mockCommentCreationRepo);
     }
 
     @Test
@@ -27,9 +29,9 @@ public class CommentServiceTest {
         Post mockPost = new Post();
         mockPost.setId(1);
 
-        Comment mockComment = new Comment();
-        mockComment.setPost(mockPost);
-        mockComment.setCommenter(mockUser);
+        CommentCreationDto mockComment = new CommentCreationDto();
+//        mockComment.setPost(mockPost);
+//        mockComment.setCommenter(mockUser);
 
 
         testCommentService.commentOnPost(mockComment);

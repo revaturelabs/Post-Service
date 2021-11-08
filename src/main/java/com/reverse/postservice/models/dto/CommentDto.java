@@ -1,12 +1,10 @@
-package com.reverse.postservice.models;
+package com.reverse.postservice.models.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.reverse.postservice.models.User;
+import lombok.*;
+import net.bytebuddy.agent.builder.AgentBuilder;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity
@@ -15,16 +13,16 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+@ToString
+public class CommentDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @Column(name = "post_id")
+    private int postId;
 
     @ManyToOne
     @JoinColumn(name = "commenter_id")

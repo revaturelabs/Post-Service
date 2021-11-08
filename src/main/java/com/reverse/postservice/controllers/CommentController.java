@@ -1,6 +1,7 @@
 package com.reverse.postservice.controllers;
 
 import com.reverse.postservice.models.Comment;
+import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,17 +22,18 @@ public class CommentController {
     }
 
     @PostMapping(value = "/comment")
-    public ResponseEntity commentOnPost(@RequestBody Comment comment) {
+    public ResponseEntity commentOnPost(@RequestBody CommentCreationDto comment) {
         try {
             commentService.commentOnPost(comment);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    @DeleteMapping(value = "/post/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity deleteComment(@PathVariable int id) {
         try {
             commentService.deleteComment(id);

@@ -5,13 +5,15 @@ import com.reverse.postservice.models.Like;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
+import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
-@Component(value = "PostService")
+@Service(value = "PostService")
 public class PostServiceImpl implements PostService{
 
     PostDao postDao;
@@ -19,6 +21,7 @@ public class PostServiceImpl implements PostService{
     CommentDao commentDao;
 
     @Autowired
+    @Generated
     public PostServiceImpl(PostDao postDao, LikeDao likeDao, CommentDao commentDao) {
         this.postDao = postDao;
         this.likeDao = likeDao;
@@ -34,11 +37,15 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post getPostById(int postId) {
-        return this.postDao.getById(postId);
+        Optional<Post> p = this.postDao.findById(postId);
+        if(p.isPresent())
+            return this.postDao.findById(postId).get();
+        return null;
     }
 
     @Override
     public void likePost(Like like) {
+        this.likeDao.save(like);
     }
 
     @Override
