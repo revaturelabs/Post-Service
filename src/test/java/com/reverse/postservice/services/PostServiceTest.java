@@ -21,6 +21,7 @@ public class PostServiceTest {
         CommentDao mockCommentDao = mock(CommentDao.class);
         LikeDao mockLikeDao = mock(LikeDao.class);
         testPostService = new PostServiceImpl(mockPostDao, mockLikeDao, mockCommentDao);
+
     }
 
     @Test
@@ -77,5 +78,18 @@ public class PostServiceTest {
     @Test
     void getFeedTest(){
         testPostService.getPostFeed(1);
+    }
+
+
+    @Test
+    void getPostById() {
+    }
+
+    @Test
+    void createPost() {
+    }
+
+    @Test
+    void updatePost() {
     }
 }

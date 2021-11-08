@@ -1,6 +1,5 @@
 package com.reverse.postservice.services;
 
-import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.User;
 import com.reverse.postservice.models.dto.CommentCreationDto;
