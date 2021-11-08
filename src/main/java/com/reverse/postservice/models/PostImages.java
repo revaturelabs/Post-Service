@@ -24,7 +24,7 @@ public class PostImages {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "image_location", nullable = false)
+    @Column(name = "bucket", nullable = false)
     private Integer imageLocation;
 
     @Column(name = "image_name", nullable = false, length = 100)

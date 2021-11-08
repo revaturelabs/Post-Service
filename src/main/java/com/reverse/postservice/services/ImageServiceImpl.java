@@ -23,6 +23,8 @@ public class ImageServiceImpl implements ImageService{
     @Override
     public List<String> addImagesToBucket(List<String> base64Strings, Long userId) {
 
+        String bucketName = "reverse-social-media";
+
         //The environment credentials provider expects the AWS_ACCESS_KEY and AWS_SECRET_KEY \
         // environment variables to be set.
         AmazonS3 amazonS3 = AmazonS3ClientBuilder
