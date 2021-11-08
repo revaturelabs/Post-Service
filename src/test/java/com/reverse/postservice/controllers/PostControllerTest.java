@@ -36,13 +36,15 @@ public class PostControllerTest {
 
     private PostService mockPostService;
     private PostDtoService mockPostDtoService;
+    private ValidationUtils mockValidationUtils;
 
     @BeforeEach
     public void init() {
         mockPostService = mock(PostService.class);
         mockPostDtoService = mock(PostDtoService.class);
+        mockValidationUtils = mock(ValidationUtils.class);
 
-        testPostController = new PostController(mockPostService, mockPostDtoService);
+        testPostController = new PostController(mockPostService, mockPostDtoService, mockValidationUtils);
     }
 
     @Test

@@ -15,16 +15,18 @@ import java.util.List;
 public class CommentController {
 
     CommentService commentService;
+    ValidationUtils validationUtils;
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, ValidationUtils validationUtils) {
         this.commentService = commentService;
+        this.validationUtils = validationUtils;
     }
 
     @PostMapping(value = "/comment")
     public ResponseEntity commentOnPost(@RequestBody CommentCreationDto comment, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
 
             commentService.commentOnPost(comment);
             return new ResponseEntity(HttpStatus.CREATED);
@@ -38,7 +40,7 @@ public class CommentController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity deleteComment(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
 
             commentService.deleteComment(id);
             return new ResponseEntity(HttpStatus.OK);
@@ -50,7 +52,7 @@ public class CommentController {
     @GetMapping(value = "/post/{id}")
     public ResponseEntity<List<Comment>> getAllCommentsOnPost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
 
             List<Comment> comments = commentService.getAllCommentsOnPost(id);
 

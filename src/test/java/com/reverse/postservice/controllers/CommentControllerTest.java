@@ -20,11 +20,13 @@ public class CommentControllerTest {
 
     private CommentController testCommentController;
     private CommentService mockCommentService;
+    private ValidationUtils mockValidationUtils;
 
     @BeforeEach
     public void init() {
         mockCommentService = mock(CommentService.class);
-        testCommentController = new CommentController(mockCommentService);
+        mockValidationUtils = mock(ValidationUtils.class);
+        testCommentController = new CommentController(mockCommentService, mockValidationUtils);
     }
 
     @Test

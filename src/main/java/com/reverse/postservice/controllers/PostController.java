@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,18 +34,20 @@ public class PostController {
 
     PostService postService;
     PostDtoService postDtoService;
+    ValidationUtils validationUtils;
 
     @Autowired
     @Lazy
-    public PostController(PostService postService, @Qualifier("PostDtoService") PostDtoService postDtoService) {
+    public PostController(PostService postService, @Qualifier("PostDtoService") PostDtoService postDtoService, ValidationUtils validationUtils) {
         this.postService = postService;
         this.postDtoService = postDtoService;
+        this.validationUtils = validationUtils;
     }
 
     @PostMapping(value = "/create")
     public ResponseEntity createPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
             postDtoService.createPost(post);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -57,7 +58,7 @@ public class PostController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<FullPost> getPost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
 
             FullPost post = this.postDtoService.getPostById(id);
             if(post != null) {
@@ -73,7 +74,7 @@ public class PostController {
     @PostMapping(value = "/like")
     public ResponseEntity likePost(@RequestBody Like like, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
             postService.likePost(like);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -84,7 +85,7 @@ public class PostController {
     @PatchMapping(value = "/edit")
     public ResponseEntity editPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
             postDtoService.updatePost(post);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -95,7 +96,7 @@ public class PostController {
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deletePost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
             postService.deletePost(id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -108,7 +109,7 @@ public class PostController {
         List<Post> posts;
 
         try {
-            ValidationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
 
             posts = postService.getAllPosts();
             return ResponseEntity.ok().body(posts);
