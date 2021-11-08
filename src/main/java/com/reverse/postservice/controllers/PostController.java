@@ -44,8 +44,9 @@ public class PostController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity createPost(@RequestBody PostCreationDto post) {
+    public ResponseEntity createPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
+            ValidationUtils.validateJwt(token);
             postDtoService.createPost(post);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -54,18 +55,25 @@ public class PostController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<FullPost> getPost(@PathVariable int id) {
-        FullPost post = this.postDtoService.getPostById(id);
+    public ResponseEntity<FullPost> getPost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
+        try {
+            ValidationUtils.validateJwt(token);
 
-        if(post != null) {
-            return ResponseEntity.ok().body(post);
+            FullPost post = this.postDtoService.getPostById(id);
+            if(post != null) {
+                return ResponseEntity.ok().body(post);
+            }
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/like")
-    public ResponseEntity likePost(@RequestBody Like like) {
+    public ResponseEntity likePost(@RequestBody Like like, @RequestHeader (name="Authorization") String token) {
         try {
+            ValidationUtils.validateJwt(token);
             postService.likePost(like);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -74,8 +82,9 @@ public class PostController {
     }
 
     @PatchMapping(value = "/edit")
-    public ResponseEntity editPost(@RequestBody PostCreationDto post) {
+    public ResponseEntity editPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
+            ValidationUtils.validateJwt(token);
             postDtoService.updatePost(post);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -84,8 +93,9 @@ public class PostController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity deletePost(@PathVariable int id) {
+    public ResponseEntity deletePost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
         try {
+            ValidationUtils.validateJwt(token);
             postService.deletePost(id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -94,10 +104,12 @@ public class PostController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Post>> getAllPosts(){
+    public ResponseEntity<List<Post>> getAllPosts(@RequestHeader (name="Authorization") String token){
         List<Post> posts;
 
         try {
+            ValidationUtils.validateJwt(token);
+
             posts = postService.getAllPosts();
             return ResponseEntity.ok().body(posts);
         } catch (Exception e) {
