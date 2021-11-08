@@ -2,10 +2,7 @@ package com.reverse.postservice.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reverse.postservice.models.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -17,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class FullPost {
 
     @Id

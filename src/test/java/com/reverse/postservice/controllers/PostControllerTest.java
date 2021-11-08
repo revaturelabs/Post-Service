@@ -1,5 +1,8 @@
 package com.reverse.postservice.controllers;
 
+import com.reverse.postservice.models.Like;
+import com.reverse.postservice.models.dto.FullPost;
+import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.services.PostDtoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,102 +13,144 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest(value = PostController.class)
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class PostControllerTest {
-    @Autowired private MockMvc mockMvc;
-    @MockBean @Qualifier("PostService") PostService postService;
-    @MockBean @Qualifier("PostDtoService") PostDtoService postDtoService;
 
+    private PostController testPostController;
 
-    Post post;
-
+    private PostService mockPostService;
+    private PostDtoService mockPostDtoService;
 
     @BeforeEach
-    public void setUpForTests() throws Exception {
-        post = new Post();
+    public void init() {
+        mockPostService = mock(PostService.class);
+        mockPostDtoService = mock(PostDtoService.class);
 
+        testPostController = new PostController(mockPostService, mockPostDtoService);
     }
 
     @Test
-    public void createPostTest() throws Exception {
+    public void createPostSucceedTest() {
+        PostCreationDto post = mock(PostCreationDto.class);
 
-        mockMvc.perform(
-                        MockMvcRequestBuilders.post("/posts/create")
-                                .content(asJsonString(post))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andDo(MockMvcResultHandlers.print());
+        ResponseEntity response = testPostController.createPost(post);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
-    public void getPostTest() throws Exception {
-        mockMvc.perform(
-                        MockMvcRequestBuilders.get("/posts/1")
-                                .content(asJsonString(post))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andDo(MockMvcResultHandlers.print());
+    public void createPostFailTest() {
+        PostCreationDto post = mock(PostCreationDto.class);
+
+        when(testPostController.createPost(post)).thenThrow(new NullPointerException());
+
+        ResponseEntity response = testPostController.createPost(post);
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    public void likePostTest() throws Exception {
-        mockMvc.perform(
-                        MockMvcRequestBuilders.post("/posts/like")
-                                .content(asJsonString(post))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
+    public void getPostSucceedTest() {
+        FullPost post = mock(FullPost.class);
 
-//    @Test
-//    public void editPostTest() throws Exception {
-//        mockMvc.perform(
-//                        MockMvcRequestBuilders.put("/posts/edit")
-//                                .content(asJsonString(post))
-//                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andDo(MockMvcResultHandlers.print());
-//    }
+        when(mockPostDtoService.getPostById(1)).thenReturn(post);
+        ResponseEntity<FullPost> response = testPostController.getPost(1);
 
-    @Test
-    public void deletePostTest() throws Exception {
-        mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/posts/delete/1")
-                                .content(asJsonString(post))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+        assertEquals(post, response.getBody());
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
     @Test
-    public void getAllPostsTest() throws Exception {
-        mockMvc.perform(
-                        MockMvcRequestBuilders.get("/posts")
-                                .content(asJsonString(post))
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+    public void getPostFailTest() {
+        when(mockPostDtoService.getPostById(1)).thenReturn(null);
+        ResponseEntity<FullPost> response = testPostController.getPost(1);
+
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
+    @Test
+    public void likePostSucceedTest() {
+        Like like = mock(Like.class);
 
-    private String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        ResponseEntity response = testPostController.likePost(like);
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void likePostFailTest() {
+        Like like = mock(Like.class);
+
+        when(testPostController.likePost(like)).thenThrow(new NullPointerException());
+        ResponseEntity response = testPostController.likePost(like);
+
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void editPostSucceedTest() {
+        PostCreationDto post = mock(PostCreationDto.class);
+
+        ResponseEntity response = testPostController.editPost(post);
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void editPostFailTest() {
+        PostCreationDto post = mock(PostCreationDto.class);
+
+        when(testPostController.editPost(post)).thenThrow(new NullPointerException());
+        ResponseEntity response = testPostController.editPost(post);
+
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void deletePostSucceedTest() {
+        ResponseEntity response = testPostController.deletePost(1);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void deletePostFailTest() {
+        when(testPostController.deletePost(1)).thenThrow(new NullPointerException());
+
+        ResponseEntity response = testPostController.deletePost(1);
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void getAllPostsSucceedTest() {
+        Post post = mock(Post.class);
+
+        when(mockPostService.getAllPosts()).thenReturn(Arrays.asList(post));
+        ResponseEntity<List<Post>> response = testPostController.getAllPosts();
+
+        assertEquals(post, response.getBody().get(0));
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void getAllPostsFailTest() {
+        when(testPostController.getAllPosts()).thenThrow(new NullPointerException());
+        ResponseEntity<List<Post>> response = testPostController.getAllPosts();
+
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
 }

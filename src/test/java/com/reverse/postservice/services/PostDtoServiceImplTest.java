@@ -61,7 +61,7 @@ class PostDtoServiceImplTest {
         post.setImages(postImagesDtoList);
 
         when(fullPostDao.findById(1)).thenReturn(java.util.Optional.of(post));
-        when(likeDao.countByPostId(1)).thenReturn(12L);
+        when(likeDao.countByLikeId_PostId(1)).thenReturn(12L);
         when(commentDao.findAllCommentsByPostId(1)).thenReturn(commentList);
         when(postImagesDao.findAllPostImagesByPostId(1)).thenReturn(postImagesDtoList);
 

@@ -20,4 +20,6 @@ public interface PostService {
     List<Post> getAllPosts();
 
     List<Post> getPostFeed(int userId);
+
+    List<Post> getRecent(int days);
 }
