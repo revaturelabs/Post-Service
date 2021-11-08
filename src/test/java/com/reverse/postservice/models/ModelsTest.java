@@ -83,19 +83,6 @@ public class ModelsTest {
         assertEquals(testString,allArgs.getGender());
     }
 
-    @Test
-    void imageLocationTest(){
-        ImageLocation imageLocation = new ImageLocation();
-        ImageLocation allArgs = new ImageLocation(testNum,testString);
-
-        imageLocation.setId(testNum);
-        assertEquals(testNum,imageLocation.getId());
-        assertEquals(testNum,allArgs.getId());
-
-        imageLocation.setUrl(testString);
-        assertEquals(testString,imageLocation.getUrl());
-        assertEquals(testString,allArgs.getUrl());
-    }
 
     @Test
     void likeTest(){
@@ -150,32 +137,6 @@ public class ModelsTest {
         assertEquals(allArgsPost.getBody(),post.getBody());
         assertEquals(allArgsPost.getTitle(),post.getTitle());
         assertEquals(allArgsPost.getCreated(),post.getCreated());
-    }
-
-    @Test
-    void postImagesTest(){
-        PostImages postImages = new PostImages();
-        PostImages allArgs = new PostImages(testNum,testPost,testNum,testString,testString);
-
-        postImages.setId(testNum);
-        assertEquals(testNum,postImages.getId());
-        assertEquals(testNum,allArgs.getId());
-
-        postImages.setPost(testPost);
-        assertEquals(testPost,postImages.getPost());
-        assertEquals(testPost,allArgs.getPost());
-
-        postImages.setImageName(testString);
-        assertEquals(testString,postImages.getImageName());
-        assertEquals(testString,allArgs.getImageName());
-
-        postImages.setImageTitle(testString);
-        assertEquals(testString,postImages.getImageTitle());
-        assertEquals(testString,allArgs.getImageTitle());
-
-        postImages.setImageLocation(testNum);
-        assertEquals(testNum,postImages.getImageLocation());
-        assertEquals(testNum,allArgs.getImageLocation());
     }
 
     @Test
