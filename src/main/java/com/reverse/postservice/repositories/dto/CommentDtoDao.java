@@ -8,6 +8,11 @@ import java.util.List;
 
 @Repository
 public interface CommentDtoDao extends JpaRepository<CommentDto, Integer> {
+    /**
+     * Retrieve all comments from a specific post.
+     * @param postId The post Id to retrieve comments from.
+     * @return A list of CommentDtos.
+     */
     List<CommentDto> findAllCommentsByPostId(int postId);
 
 

@@ -34,6 +34,11 @@ public class PostDtoServiceImpl implements PostDtoService{
         this.likeDao = likeDao;
     }
 
+    /**
+     * Retrieve a post by Id.
+     * @param postId Post Id of the post to retrieve.
+     * @return A FullPost which contains everything related to the post such as comments, likes, etc.
+     */
     @Override
     public FullPost getPostById(int postId) {
         FullPost post = this.fullPostDao.findById(postId).get();
@@ -45,6 +50,10 @@ public class PostDtoServiceImpl implements PostDtoService{
         return post;
     }
 
+    /**
+     * Create a new post.
+     * @param post Post to be created.
+     */
     @Override
     public void createPost(PostCreationDto post) {
         //todo: Make a image service. Extract and save images on the post.
@@ -53,6 +62,10 @@ public class PostDtoServiceImpl implements PostDtoService{
         this.postCreationDao.save(post);
     }
 
+    /**
+     * Update an existing post with new information.
+     * @param post New post changes.
+     */
     @Override
     public void updatePost(PostCreationDto post) {
         //Can't update images on post. So don't extract or save the images.
