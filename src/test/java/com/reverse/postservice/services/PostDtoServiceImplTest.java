@@ -5,6 +5,7 @@ import com.reverse.postservice.models.Like;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.dto.CommentDto;
 import com.reverse.postservice.models.dto.FullPost;
+import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.models.dto.PostImagesDto;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.dto.CommentDtoDao;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -69,9 +71,21 @@ class PostDtoServiceImplTest {
 
     @Test
     void createPost() {
+        PostCreationDto postDto = new PostCreationDto();
+        postDto.setId(1);
+        postDto.setTitle("Title");
+        postDto.setBody("Body");
+        postDtoService.createPost(postDto);
+        assertNotNull(postCreationDao.findById(1));
     }
 
     @Test
     void updatePost() {
+        PostCreationDto postDto = new PostCreationDto();
+        postDto.setId(1);
+        postDto.setTitle("Title");
+        postDto.setBody("Body");
+        postDtoService.updatePost(postDto);
+        assertNotNull(postCreationDao.findById(1));
     }
 }
