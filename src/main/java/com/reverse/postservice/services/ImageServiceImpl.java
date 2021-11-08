@@ -88,6 +88,8 @@ public class ImageServiceImpl implements ImageService{
 
             PostImage img = imageDao.save(image);
             createdImages.add(img);
+
+            count++;
         }
 
         return createdImages;
