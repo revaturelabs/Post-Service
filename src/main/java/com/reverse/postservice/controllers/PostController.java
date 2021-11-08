@@ -73,14 +73,12 @@ public class PostController {
         }
     }
 
-    @Transactional
     @PatchMapping(value = "/edit")
     public ResponseEntity editPost(@RequestBody PostCreationDto post) {
         try {
             postDtoService.updatePost(post);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
