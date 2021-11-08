@@ -71,7 +71,7 @@ public class PostServiceImpl implements PostService{
 
     public List<Post> getRecent(int days){
         //172,800,000 is the number of milliseconds in 48 hours
-        return postDao.getPostsByCreatedAfterOrderByCreated(Instant.ofEpochMilli(System.currentTimeMillis() - daysToMilliseconds(days)));
+        return null;//postDao.getPostsByCreatedAfterOrderByCreated(Instant.ofEpochMilli(System.currentTimeMillis() - daysToMilliseconds(days)));
     }
 
     private Long daysToMilliseconds(int days){

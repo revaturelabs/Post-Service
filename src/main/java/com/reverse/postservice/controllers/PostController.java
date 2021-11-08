@@ -6,7 +6,6 @@ import com.reverse.postservice.models.dto.FullPost;
 import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.services.PostDtoService;
 import com.reverse.postservice.services.PostService;
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

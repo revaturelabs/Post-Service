@@ -5,13 +5,12 @@ spring:
   application:
     name: 'post-service'
   datasource:
-    platform: postgres
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}

@@ -34,7 +34,7 @@ public class PostDtoServiceImpl implements PostDtoService{
     public FullPost getPostById(int postId) {
         FullPost post = this.fullPostDao.findById(postId).get();
 
-        post.setNumberOfLikes(this.likeDao.countByPostId(postId));
+        post.setNumberOfLikes(this.likeDao.countByLikeId_PostId(postId));//countByPostId
         post.setComments(this.commentDao.findAllCommentsByPostId(postId));
         post.setImages(this.postImagesDao.findAllPostImagesByPostId(postId));
 
