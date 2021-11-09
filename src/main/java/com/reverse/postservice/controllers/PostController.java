@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class PostController {
             Log.getLog().debug("validationUtils.validateJwt completed.");
 
             Log.getLog().debug("Calling postDtoService.createPost from createPost in PostController.");
+            validationUtils.validateJwt(token.split("Bearer ")[1]);
             postDtoService.createPost(post);
             Log.getLog().debug("postDtoService.createPost successful.");
             return new ResponseEntity(HttpStatus.CREATED);
@@ -138,6 +140,7 @@ public class PostController {
      * @param post The post to be edited.
      * @return Represents the HTTP response.
      */
+    @Transactional
     @PatchMapping(value = "/edit")
     public ResponseEntity editPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         Log.getLog().debug("Editing post from editPost in PostController.");
@@ -155,6 +158,7 @@ public class PostController {
         } catch (Exception e) {
             Log.getLog().fatal("Exception caught from editPost in PostController.");
             Log.getLog().fatal(e);
+            e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

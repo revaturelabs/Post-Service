@@ -92,9 +92,9 @@ public class ModelsTest {
         assertEquals(testNum,imageLocation.getId());
         assertEquals(testNum,allArgs.getId());
 
-        imageLocation.setUrl(testString);
-        assertEquals(testString,imageLocation.getUrl());
-        assertEquals(testString,allArgs.getUrl());
+        imageLocation.setBucketName(testString);
+        assertEquals(testString,imageLocation.getBucketName());
+        assertEquals(testString,allArgs.getBucketName());
     }
 
     @Test
@@ -187,9 +187,9 @@ public class ModelsTest {
         assertEquals(testNum,profilePicture.getId());
         assertEquals(testNum,allArgs.getId());
 
-        profilePicture.setImageLocation(testImageLocation);
-        assertEquals(testImageLocation,profilePicture.getImageLocation());
-        assertEquals(testImageLocation,allArgs.getImageLocation());
+        profilePicture.setBucket(testImageLocation);
+        assertEquals(testImageLocation,profilePicture.getBucket());
+        assertEquals(testImageLocation,allArgs.getBucket());
 
         profilePicture.setImageName(testString);
         assertEquals(testString,profilePicture.getImageName());

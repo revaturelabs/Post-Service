@@ -10,8 +10,6 @@ import com.reverse.postservice.repositories.dto.PostImagesDtoDao;
 import com.reverse.postservice.tools.Log;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -48,7 +46,7 @@ public class PostDtoServiceImpl implements PostDtoService{
         FullPost post = this.fullPostDao.findById(postId).get();
         Log.getLog().debug("fullPostDao.findById successful.");
 
-        post.setNumberOfLikes(this.likeDao.countByLikeId_PostId(postId));//countByPostId
+        post.setLikes(this.likeDao.findAllUsersForPostId(postId)); //List of user ids who liked this post
         post.setComments(this.commentDao.findAllCommentsByPostId(postId));
         post.setImages(this.postImagesDao.findAllPostImagesByPostId(postId));
 
@@ -80,7 +78,7 @@ public class PostDtoServiceImpl implements PostDtoService{
         Log.getLog().debug("Updating post from updatePost in PostDtoServiceImpl.");
 
         //Can't update images on post. So don't extract or save the images.
-        Integer id = post.getId();
+        int id = post.getId();
         String title = post.getTitle();
         String body = post.getBody();
         Instant edited = Instant.now();

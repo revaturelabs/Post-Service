@@ -14,11 +14,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageLocation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "url", nullable = false, length = 200)
-    private String url;
+    @Column(name = "bucket_name", nullable = false, length = 200)
+    private String bucketName;
+
 }
