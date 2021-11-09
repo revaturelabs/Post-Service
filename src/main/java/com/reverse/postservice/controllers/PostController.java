@@ -56,7 +56,8 @@ public class PostController {
     @PostMapping(value = "/create")
     public ResponseEntity createPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
-            validationUtils.validateJwt(token.split("Bearer ")[1]);
+            validationUtils.validateJwt(token);
+
             postDtoService.createPost(post);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -114,7 +115,6 @@ public class PostController {
             postDtoService.updatePost(post);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

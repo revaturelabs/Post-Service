@@ -110,7 +110,7 @@ public class PostServiceImpl implements PostService{
         return null;//postDao.getPostsByCreatedAfterOrderByCreated(Instant.ofEpochMilli(System.currentTimeMillis() - daysToMilliseconds(days)));
     }
 
-    private Long daysToMilliseconds(int days){
-        return (long) days * 86400000;
-    }
+//    private Long daysToMilliseconds(int days){
+//        return (long) days * 86400000;
+//    }
 }

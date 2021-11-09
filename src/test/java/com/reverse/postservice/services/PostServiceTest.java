@@ -4,24 +4,30 @@ import com.reverse.postservice.models.*;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PostServiceTest {
-    private static PostService testPostService;
 
-    @BeforeAll
-    public static void init() {
-        PostDao mockPostDao = mock(PostDao.class);
+    private PostService testPostService;
+    private PostDao mockPostDao;
+
+    @BeforeEach
+    public void init() {
+        mockPostDao = mock(PostDao.class);
         CommentDao mockCommentDao = mock(CommentDao.class);
         LikeDao mockLikeDao = mock(LikeDao.class);
         testPostService = new PostServiceImpl(mockPostDao, mockLikeDao, mockCommentDao);
+
     }
 
     @Test
@@ -83,6 +89,17 @@ public class PostServiceTest {
 
     @Test
     void getPostById() {
+        Post mockPost = mock(Post.class);
+
+        when(mockPostDao.findById(1)).thenReturn(java.util.Optional.ofNullable(mockPost));
+        Post post = testPostService.getPostById(1);
+        assertSame(mockPost, post);
+    }
+
+    @Test
+    void getRecent() {
+        List<Post> posts = testPostService.getRecent(1);
+        assertNull(posts);
     }
 
     @Test
