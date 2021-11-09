@@ -5,6 +5,7 @@ import com.reverse.postservice.models.Like;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
+import com.reverse.postservice.tools.Log;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,9 +35,13 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public void createPost(Post post) {
+        Log.getLog().debug("Creating post from createPost in PostServiceImpl.");
+
         post.setCreated(Instant.now());
         post.setLastEdited(Instant.now());
+        Log.getLog().debug("Calling postDao.save from createPost in PostServiceImpl.");
         this.postDao.save(post);
+        Log.getLog().debug("postDao.save successful.");
     }
 
     /**
@@ -46,9 +51,20 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public Post getPostById(int postId) {
+        Log.getLog().debug("Getting post by id " + postId + " from getPostById in PostServiceImpl.");
+
+        Log.getLog().debug("Calling postDao.findById from getPostById in PostServiceImpl.");
         Optional<Post> p = this.postDao.findById(postId);
-        if(p.isPresent())
-            return this.postDao.findById(postId).get();
+        Log.getLog().debug("postDao.findById successful.");
+        if(p.isPresent()) {
+            Log.getLog().debug("Post is present.");
+            Log.getLog().debug("Calling postDao.findById from getPostById in PostServiceImpl.");
+            Post p2 = this.postDao.findById(postId).get();
+            Log.getLog().debug("postDao.findById successful.");
+            return p2;
+        }
+
+        Log.getLog().debug("No post is present, returning null.");
         return null;
     }
 
@@ -58,7 +74,11 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public void likePost(Like like) {
+        Log.getLog().debug("Liking post from likePost in PostServiceImpl.");
+
+        Log.getLog().debug("Calling likeDao.save from likePost in PostServiceImpl.");
         this.likeDao.save(like);
+        Log.getLog().debug("likeDao.save successful.");
     }
 
     /**
@@ -67,8 +87,12 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public void updatePost(Post post) {
+        Log.getLog().debug("Updating post from updatePost in PostServiceImpl.");
+
         post.setLastEdited(Instant.now());
+        Log.getLog().debug("Calling postDao.save from updatePost in PostServiceImpl.");
         this.postDao.save(post);
+        Log.getLog().debug("postDao.save successful.");
     }
 
     /**
@@ -77,7 +101,11 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public void deletePost(int postId) {
+        Log.getLog().debug("Deleting post from deletePost in PostServiceImpl.");
+
+        Log.getLog().debug("Calling postDao.deleteById from deletePost in PostServiceImpl.");
         this.postDao.deleteById(postId);
+        Log.getLog().debug("postDao.deleteById successful.");
     }
 
     /**
@@ -86,7 +114,13 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public List<Post> getAllPosts(){
-        return postDao.findAll();
+        Log.getLog().debug("Getting all posts from getAllPosts in PostServiceImpl.");
+
+        Log.getLog().debug("Calling postDao.findAll from deletePost in PostServiceImpl.");
+        List<Post> posts = postDao.findAll();
+        Log.getLog().debug("postDao.findAll successful.");
+
+        return posts;
     }
 
     /**
@@ -96,7 +130,13 @@ public class PostServiceImpl implements PostService{
      */
     @Override
     public List<Post> getPostFeed(int userId){
-        return getAllPosts();
+        Log.getLog().debug("Getting a post feed from getPostFeed in PostServiceImpl for user id " + userId + ".");
+
+        Log.getLog().debug("Calling getAllPosts from deletePost in PostServiceImpl.");
+        List<Post> posts = getAllPosts();
+        Log.getLog().debug("getAllPosts successful.");
+
+        return posts;
     }
 
 
@@ -110,7 +150,7 @@ public class PostServiceImpl implements PostService{
         return null;//postDao.getPostsByCreatedAfterOrderByCreated(Instant.ofEpochMilli(System.currentTimeMillis() - daysToMilliseconds(days)));
     }
 
-    private Long daysToMilliseconds(int days){
-        return (long) days * 86400000;
-    }
+//    private Long daysToMilliseconds(int days){
+//        return (long) days * 86400000;
+//    }
 }

@@ -6,6 +6,7 @@ import com.reverse.postservice.models.dto.FullPost;
 import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.services.PostDtoService;
 import com.reverse.postservice.services.PostService;
+import com.reverse.postservice.tools.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -55,11 +56,24 @@ public class PostController {
      */
     @PostMapping(value = "/create")
     public ResponseEntity createPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
+        Log.getLog().debug("Creating post from createPost in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
         try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from createPost in PostController.");
+            validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postDtoService.createPost from createPost in PostController.");
             validationUtils.validateJwt(token.split("Bearer ")[1]);
+            validationUtils.validateJwt(token);
+
             postDtoService.createPost(post);
+            Log.getLog().debug("postDtoService.createPost successful.");
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
+            Log.getLog().fatal("Exception caught from createPost in PostController.");
+            Log.getLog().fatal(e);
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -71,16 +85,28 @@ public class PostController {
      */
     @GetMapping(value = "/{id}")
     public ResponseEntity<FullPost> getPost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
-        try {
-            validationUtils.validateJwt(token);
+        Log.getLog().debug("Getting post id " + id + " from getPost in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
 
+        try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from getPost in PostController.");
+            validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postDtoService.getPostById from getPost in PostController.");
             FullPost post = this.postDtoService.getPostById(id);
+            Log.getLog().debug("postDtoService.getPostById successful.");
             if(post != null) {
+                Log.getLog().debug("Post not null, returning OK.");
                 return ResponseEntity.ok().body(post);
             }
+
+            Log.getLog().debug("Post is null, returning NOT_FOUND.");
             return new ResponseEntity(HttpStatus.NOT_FOUND);
 
         } catch (Exception e) {
+            Log.getLog().error("Exception caught from getPost in PostController.");
+            Log.getLog().error(e);
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
@@ -92,11 +118,21 @@ public class PostController {
      */
     @PostMapping(value = "/like")
     public ResponseEntity likePost(@RequestBody Like like, @RequestHeader (name="Authorization") String token) {
+        Log.getLog().debug("Liking post from likePost in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
         try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from likePost in PostController.");
             validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postService.likePost from likePost in PostController.");
             postService.likePost(like);
+            Log.getLog().debug("postService.likePost successful.");
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            Log.getLog().fatal("Exception caught from likePost in PostController.");
+            Log.getLog().fatal(e);
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -109,11 +145,21 @@ public class PostController {
     @Transactional
     @PatchMapping(value = "/edit")
     public ResponseEntity editPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
+        Log.getLog().debug("Editing post from editPost in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
         try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from editPost in PostController.");
             validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postDtoService.updatePost from editPost in PostController.");
             postDtoService.updatePost(post);
+            Log.getLog().debug("postDtoService.updatePost successful.");
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            Log.getLog().fatal("Exception caught from editPost in PostController.");
+            Log.getLog().fatal(e);
             e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -126,11 +172,21 @@ public class PostController {
      */
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deletePost(@PathVariable int id, @RequestHeader (name="Authorization") String token) {
+        Log.getLog().debug("Deleting post id " + id + " from deletePost in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
         try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from deletePost in PostController.");
             validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postService.deletePost from deletePost in PostController.");
             postService.deletePost(id);
+            Log.getLog().debug("postService.deletePost successful.");
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            Log.getLog().error("Exception caught from deletePost in PostController.");
+            Log.getLog().error(e);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
@@ -141,14 +197,23 @@ public class PostController {
      */
     @GetMapping()
     public ResponseEntity<List<Post>> getAllPosts(@RequestHeader (name="Authorization") String token){
+        Log.getLog().debug("Getting all posts from getAllPosts in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
         List<Post> posts;
 
         try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from getAllPosts in PostController.");
             validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
 
+            Log.getLog().debug("Calling postService.getAllPosts from getAllPosts in PostController.");
             posts = postService.getAllPosts();
+            Log.getLog().debug("postService.getAllPosts successful.");
             return ResponseEntity.ok().body(posts);
         } catch (Exception e) {
+            Log.getLog().error("Exception caught from getAllPosts in PostController.");
+            Log.getLog().error(e);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }

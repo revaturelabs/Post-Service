@@ -7,6 +7,7 @@ import com.reverse.postservice.repositories.dto.CommentDtoDao;
 import com.reverse.postservice.repositories.dto.FullPostDao;
 import com.reverse.postservice.repositories.dto.PostCreationRepo;
 import com.reverse.postservice.repositories.dto.PostImagesDtoDao;
+import com.reverse.postservice.tools.Log;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,11 @@ public class PostDtoServiceImpl implements PostDtoService{
      */
     @Override
     public FullPost getPostById(int postId) {
+        Log.getLog().debug("Getting post by id " + postId + " from getPostById in PostDtoServiceImpl.");
+
+        Log.getLog().debug("Calling fullPostDao.findById from getPostById in PostDtoServiceImpl.");
         FullPost post = this.fullPostDao.findById(postId).get();
+        Log.getLog().debug("fullPostDao.findById successful.");
 
         post.setLikes(this.likeDao.findAllUsersForPostId(postId)); //List of user ids who liked this post
         post.setComments(this.commentDao.findAllCommentsByPostId(postId));
@@ -54,10 +59,14 @@ public class PostDtoServiceImpl implements PostDtoService{
      */
     @Override
     public void createPost(PostCreationDto post) {
+        Log.getLog().debug("Creating post from createPost in PostDtoServiceImpl.");
+
         //todo: Make a image service. Extract and save images on the post.
         post.setCreated(Instant.now());
         post.setLastEdited(Instant.now());
+        Log.getLog().debug("Calling postCreationDao.save from createPost in PostDtoServiceImpl.");
         this.postCreationDao.save(post);
+        Log.getLog().debug("postCreationDao.save successful.");
     }
 
     /**
@@ -66,13 +75,17 @@ public class PostDtoServiceImpl implements PostDtoService{
      */
     @Override
     public void updatePost(PostCreationDto post) {
+        Log.getLog().debug("Updating post from updatePost in PostDtoServiceImpl.");
+
         //Can't update images on post. So don't extract or save the images.
         int id = post.getId();
         String title = post.getTitle();
         String body = post.getBody();
         Instant edited = Instant.now();
 
+        Log.getLog().debug("Calling postCreationDao.updatePosts from updatePost in PostDtoServiceImpl.");
         this.postCreationDao.updatePosts(id, title, body, edited);
+        Log.getLog().debug("postCreationDao.updatePosts successful.");
     }
 
 }

@@ -22,7 +22,6 @@ public class ProfilePicture {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "bucket", nullable = false)
-    private ImageLocation imageLocation;
     private ImageLocation bucket;
 
     @Column(name = "image_name", nullable = false, length = 50)
