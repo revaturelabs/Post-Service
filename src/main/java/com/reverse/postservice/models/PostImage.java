@@ -22,9 +22,8 @@ public class PostImage {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "bucket", nullable = false)
-    @JoinColumn(name = "image_locations")
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "bucket", nullable = false)
     private ImageLocation bucket;
 
     @Column(name = "image_name", nullable = false, length = 100)
