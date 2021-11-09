@@ -96,7 +96,7 @@ public class ModelsTest {
         assertEquals(testString,imageLocation.getBucketName());
         assertEquals(testString,allArgs.getBucketName());
     }
-
+  
     @Test
     void likeTest(){
         Like like = new Like();
@@ -150,32 +150,6 @@ public class ModelsTest {
         assertEquals(allArgsPost.getBody(),post.getBody());
         assertEquals(allArgsPost.getTitle(),post.getTitle());
         assertEquals(allArgsPost.getCreated(),post.getCreated());
-    }
-
-    @Test
-    void postImagesTest(){
-        PostImages postImages = new PostImages();
-        PostImages allArgs = new PostImages(testNum,testPost,testNum,testString,testString);
-
-        postImages.setId(testNum);
-        assertEquals(testNum,postImages.getId());
-        assertEquals(testNum,allArgs.getId());
-
-        postImages.setPost(testPost);
-        assertEquals(testPost,postImages.getPost());
-        assertEquals(testPost,allArgs.getPost());
-
-        postImages.setImageName(testString);
-        assertEquals(testString,postImages.getImageName());
-        assertEquals(testString,allArgs.getImageName());
-
-        postImages.setImageTitle(testString);
-        assertEquals(testString,postImages.getImageTitle());
-        assertEquals(testString,allArgs.getImageTitle());
-
-        postImages.setImageLocation(testNum);
-        assertEquals(testNum,postImages.getImageLocation());
-        assertEquals(testNum,allArgs.getImageLocation());
     }
 
     @Test
