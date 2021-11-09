@@ -52,7 +52,7 @@ public class PostControllerTest {
         PostCreationDto post = mock(PostCreationDto.class);
 
         ResponseEntity response = testPostController.createPost(post, "");
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test

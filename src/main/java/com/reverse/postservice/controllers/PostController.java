@@ -60,12 +60,7 @@ public class PostController {
         Log.getLog().debug("Authorization Token: " + token);
 
         try {
-            Log.getLog().debug("Calling validationUtils.validateJwt from createPost in PostController.");
-            validationUtils.validateJwt(token);
-            Log.getLog().debug("validationUtils.validateJwt completed.");
-
             Log.getLog().debug("Calling postDtoService.createPost from createPost in PostController.");
-            validationUtils.validateJwt(token.split("Bearer ")[1]);
             validationUtils.validateJwt(token);
 
             postDtoService.createPost(post);
