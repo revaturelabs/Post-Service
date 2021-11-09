@@ -14,3 +14,5 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
+
+validationServer: ${VALIDATION:http://localhost:8084/users/validation}

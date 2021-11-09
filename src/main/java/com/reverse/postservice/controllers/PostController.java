@@ -47,7 +47,7 @@ public class PostController {
     @PostMapping(value = "/create")
     public ResponseEntity createPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
-            validationUtils.validateJwt(token);
+            validationUtils.validateJwt(token.split("Bearer ")[1]);
             postDtoService.createPost(post);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
