@@ -1,6 +1,7 @@
 package com.reverse.postservice.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.reverse.postservice.models.LikeId;
 import com.reverse.postservice.models.User;
 import lombok.*;
 
@@ -41,7 +42,7 @@ public class FullPost {
     private Instant lastEdited;
 
     @Transient
-    private Long numberOfLikes;
+    private List<Integer> likes;
 
     @Transient
     private List<CommentDto> comments;
