@@ -3,7 +3,9 @@ package com.reverse.postservice.controllers;
 import com.reverse.postservice.exceptions.InvalidJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ValidationUtilsImpl implements ValidationUtils{
 
     public void validateJwt(String token) throws InvalidJwtException {
