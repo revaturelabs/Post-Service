@@ -24,17 +24,30 @@ public class CommentServiceImpl implements CommentService{
         this.commentCreationRepo = commentCreationRepo;
     }
 
+    /**
+     * Post a comment to a post.
+     * @param comment Comment to be posted.
+     */
     @Override
     public void commentOnPost(CommentCreationDto comment) {
         comment.setCreated(Instant.now());
         this.commentCreationRepo.save(comment);
     }
 
+    /**
+     * Delete a comment from a post.
+     * @param commentId Comment to be deleted (by Id).
+     */
     @Override
     public void deleteComment(int commentId) {
         commentDao.deleteById(commentId);
     }
 
+    /**
+     * Retrieve all comments from a post.
+     * @param postId Id of the post to retrieve comments from.
+     * @return A list of comments from the specified post.
+     */
     @Override
     public List<Comment> getAllCommentsOnPost(int postId) {
         return commentDao.getCommentsByPost_Id(postId);
