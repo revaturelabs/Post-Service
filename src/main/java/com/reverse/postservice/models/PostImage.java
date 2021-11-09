@@ -1,11 +1,9 @@
 package com.reverse.postservice.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @Table(name = "post_images")
@@ -13,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostImages {
+public class PostImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +22,20 @@ public class PostImages {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "image_location", nullable = false)
-    private Integer imageLocation;
+    @Column(name = "bucket", nullable = false)
+    @JoinColumn(name = "image_locations")
+    @ManyToOne
+    private ImageLocation bucket;
 
     @Column(name = "image_name", nullable = false, length = 100)
     private String imageName;
 
     @Column(name = "image_title", length = 50)
     private String imageTitle;
+
+    @Generated
+    public String getUrl(){
+        return "https://"+bucket.getBucketName()+".s3.amazonaws.com/"+imageName;
+    }
 
 }

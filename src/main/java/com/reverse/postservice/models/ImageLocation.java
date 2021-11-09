@@ -22,5 +22,4 @@ public class ImageLocation {
 
     @Column(name = "bucket_name", nullable = false, length = 200)
     private String bucketName;
-
 }
