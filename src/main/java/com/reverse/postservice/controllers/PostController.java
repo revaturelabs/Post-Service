@@ -66,6 +66,8 @@ public class PostController {
 
             Log.getLog().debug("Calling postDtoService.createPost from createPost in PostController.");
             validationUtils.validateJwt(token.split("Bearer ")[1]);
+            validationUtils.validateJwt(token);
+
             postDtoService.createPost(post);
             Log.getLog().debug("postDtoService.createPost successful.");
             return new ResponseEntity(HttpStatus.CREATED);
