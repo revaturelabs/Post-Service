@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -105,6 +106,7 @@ public class PostController {
      * @param post The post to be edited.
      * @return Represents the HTTP response.
      */
+    @Transactional
     @PatchMapping(value = "/edit")
     public ResponseEntity editPost(@RequestBody PostCreationDto post, @RequestHeader (name="Authorization") String token) {
         try {
@@ -112,6 +114,7 @@ public class PostController {
             postDtoService.updatePost(post);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

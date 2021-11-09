@@ -56,7 +56,7 @@ class PostDtoServiceImplTest {
         postImagesDtoList.add(postImage);
 
         FullPost post = new FullPost();
-        post.setNumberOfLikes(12L);
+        //post.setNumberOfLikes(12L);
         post.setComments(commentList);
         post.setImages(postImagesDtoList);
 
