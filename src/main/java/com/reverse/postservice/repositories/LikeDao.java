@@ -11,12 +11,6 @@ import java.util.List;
 
 @Repository
 public interface LikeDao extends JpaRepository<Like, Integer> {
-//    @Query(value = "select count(post_id)\n" +
-//            "from user_likes\n" +
-//            "where post_id = :id", nativeQuery = true)
-//    Long countByPostId(@Param("id") int id);
-
-    //Does the same as above with generated query
     Long countByLikeId_PostId(int id);
 
     @Query(value = "SELECT user_id FROM user_likes where post_id = :id", nativeQuery = true)
