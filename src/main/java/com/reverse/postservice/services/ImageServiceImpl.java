@@ -10,7 +10,7 @@ import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.PostImage;
 import com.reverse.postservice.models.dto.ImageDto;
 import com.reverse.postservice.repositories.ImageDao;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Setter;
 import lombok.Generated;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
