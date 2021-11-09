@@ -83,7 +83,20 @@ public class ModelsTest {
         assertEquals(testString,allArgs.getGender());
     }
 
+    @Test
+    void imageLocationTest(){
+        ImageLocation imageLocation = new ImageLocation();
+        ImageLocation allArgs = new ImageLocation(testNum,testString);
 
+        imageLocation.setId(testNum);
+        assertEquals(testNum,imageLocation.getId());
+        assertEquals(testNum,allArgs.getId());
+
+        imageLocation.setBucketName(testString);
+        assertEquals(testString,imageLocation.getBucketName());
+        assertEquals(testString,allArgs.getBucketName());
+    }
+  
     @Test
     void likeTest(){
         Like like = new Like();
@@ -148,9 +161,9 @@ public class ModelsTest {
         assertEquals(testNum,profilePicture.getId());
         assertEquals(testNum,allArgs.getId());
 
-        profilePicture.setImageLocation(testImageLocation);
-        assertEquals(testImageLocation,profilePicture.getImageLocation());
-        assertEquals(testImageLocation,allArgs.getImageLocation());
+        profilePicture.setBucket(testImageLocation);
+        assertEquals(testImageLocation,profilePicture.getBucket());
+        assertEquals(testImageLocation,allArgs.getBucket());
 
         profilePicture.setImageName(testString);
         assertEquals(testString,profilePicture.getImageName());

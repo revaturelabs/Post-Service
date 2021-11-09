@@ -9,8 +9,6 @@ import com.reverse.postservice.repositories.dto.PostCreationRepo;
 import com.reverse.postservice.repositories.dto.PostImagesDtoDao;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -34,17 +32,26 @@ public class PostDtoServiceImpl implements PostDtoService{
         this.likeDao = likeDao;
     }
 
+    /**
+     * Retrieve a post by Id.
+     * @param postId Post Id of the post to retrieve.
+     * @return A FullPost which contains everything related to the post such as comments, likes, etc.
+     */
     @Override
     public FullPost getPostById(int postId) {
         FullPost post = this.fullPostDao.findById(postId).get();
 
-        post.setNumberOfLikes(this.likeDao.countByLikeId_PostId(postId));//countByPostId
+        post.setLikes(this.likeDao.findAllUsersForPostId(postId)); //List of user ids who liked this post
         post.setComments(this.commentDao.findAllCommentsByPostId(postId));
         post.setImages(this.postImagesDao.findAllPostImagesByPostId(postId));
 
         return post;
     }
 
+    /**
+     * Create a new post.
+     * @param post Post to be created.
+     */
     @Override
     public void createPost(PostCreationDto post) {
         //todo: Make a image service. Extract and save images on the post.
@@ -53,10 +60,14 @@ public class PostDtoServiceImpl implements PostDtoService{
         this.postCreationDao.save(post);
     }
 
+    /**
+     * Update an existing post with new information.
+     * @param post New post changes.
+     */
     @Override
     public void updatePost(PostCreationDto post) {
         //Can't update images on post. So don't extract or save the images.
-        Integer id = post.getId();
+        int id = post.getId();
         String title = post.getTitle();
         String body = post.getBody();
         Instant edited = Instant.now();

@@ -36,20 +36,22 @@ public class PostControllerTest {
 
     private PostService mockPostService;
     private PostDtoService mockPostDtoService;
+    private ValidationUtils mockValidationUtils;
 
     @BeforeEach
     public void init() {
         mockPostService = mock(PostService.class);
         mockPostDtoService = mock(PostDtoService.class);
+        mockValidationUtils = mock(ValidationUtils.class);
 
-        testPostController = new PostController(mockPostService, mockPostDtoService);
+        testPostController = new PostController(mockPostService, mockPostDtoService, mockValidationUtils);
     }
 
     @Test
     public void createPostSucceedTest() {
         PostCreationDto post = mock(PostCreationDto.class);
 
-        ResponseEntity response = testPostController.createPost(post);
+        ResponseEntity response = testPostController.createPost(post, "");
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
@@ -57,9 +59,9 @@ public class PostControllerTest {
     public void createPostFailTest() {
         PostCreationDto post = mock(PostCreationDto.class);
 
-        when(testPostController.createPost(post)).thenThrow(new NullPointerException());
+        when(testPostController.createPost(post, "")).thenThrow(new NullPointerException());
 
-        ResponseEntity response = testPostController.createPost(post);
+        ResponseEntity response = testPostController.createPost(post, "");
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -68,7 +70,7 @@ public class PostControllerTest {
         FullPost post = mock(FullPost.class);
 
         when(mockPostDtoService.getPostById(1)).thenReturn(post);
-        ResponseEntity<FullPost> response = testPostController.getPost(1);
+        ResponseEntity<FullPost> response = testPostController.getPost(1, "");
 
         assertEquals(post, response.getBody());
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -77,7 +79,7 @@ public class PostControllerTest {
     @Test
     public void getPostFailTest() {
         when(mockPostDtoService.getPostById(1)).thenReturn(null);
-        ResponseEntity<FullPost> response = testPostController.getPost(1);
+        ResponseEntity<FullPost> response = testPostController.getPost(1, "");
 
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
@@ -86,7 +88,7 @@ public class PostControllerTest {
     public void likePostSucceedTest() {
         Like like = mock(Like.class);
 
-        ResponseEntity response = testPostController.likePost(like);
+        ResponseEntity response = testPostController.likePost(like, "");
 
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
@@ -95,8 +97,8 @@ public class PostControllerTest {
     public void likePostFailTest() {
         Like like = mock(Like.class);
 
-        when(testPostController.likePost(like)).thenThrow(new NullPointerException());
-        ResponseEntity response = testPostController.likePost(like);
+        when(testPostController.likePost(like, "")).thenThrow(new NullPointerException());
+        ResponseEntity response = testPostController.likePost(like, "");
 
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -105,7 +107,7 @@ public class PostControllerTest {
     public void editPostSucceedTest() {
         PostCreationDto post = mock(PostCreationDto.class);
 
-        ResponseEntity response = testPostController.editPost(post);
+        ResponseEntity response = testPostController.editPost(post, "");
 
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
@@ -114,23 +116,23 @@ public class PostControllerTest {
     public void editPostFailTest() {
         PostCreationDto post = mock(PostCreationDto.class);
 
-        when(testPostController.editPost(post)).thenThrow(new NullPointerException());
-        ResponseEntity response = testPostController.editPost(post);
+        when(testPostController.editPost(post, "")).thenThrow(new NullPointerException());
+        ResponseEntity response = testPostController.editPost(post, "");
 
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void deletePostSucceedTest() {
-        ResponseEntity response = testPostController.deletePost(1);
+        ResponseEntity response = testPostController.deletePost(1, "");
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
     @Test
     public void deletePostFailTest() {
-        when(testPostController.deletePost(1)).thenThrow(new NullPointerException());
+        when(testPostController.deletePost(1, "")).thenThrow(new NullPointerException());
 
-        ResponseEntity response = testPostController.deletePost(1);
+        ResponseEntity response = testPostController.deletePost(1, "");
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
@@ -139,7 +141,7 @@ public class PostControllerTest {
         Post post = mock(Post.class);
 
         when(mockPostService.getAllPosts()).thenReturn(Arrays.asList(post));
-        ResponseEntity<List<Post>> response = testPostController.getAllPosts();
+        ResponseEntity<List<Post>> response = testPostController.getAllPosts("");
 
         assertEquals(post, response.getBody().get(0));
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -147,8 +149,8 @@ public class PostControllerTest {
 
     @Test
     public void getAllPostsFailTest() {
-        when(testPostController.getAllPosts()).thenThrow(new NullPointerException());
-        ResponseEntity<List<Post>> response = testPostController.getAllPosts();
+        when(testPostController.getAllPosts("")).thenThrow(new NullPointerException());
+        ResponseEntity<List<Post>> response = testPostController.getAllPosts("");
 
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
