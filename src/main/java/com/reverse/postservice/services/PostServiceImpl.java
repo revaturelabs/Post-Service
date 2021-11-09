@@ -6,7 +6,6 @@ import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
 import com.reverse.postservice.tools.Log;
-import javafx.geometry.Pos;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
