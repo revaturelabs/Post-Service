@@ -19,6 +19,7 @@ public class ValidationUtilsImpl implements ValidationUtils{
     private static final String validationAddress = System.getenv("VALIDATION");
 
     public void validateJwt(String token) throws InvalidJwtException {
+        System.out.println(token);
         token = token.split("Bearer ")[1];
 
         log.debug(validationAddress);
