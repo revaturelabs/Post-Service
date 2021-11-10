@@ -62,6 +62,7 @@ public class PostDtoServiceImpl implements PostDtoService{
             ImageReturnDto returnImage = new ImageReturnDto();
             returnImage.setFilename(image.getImageTitle());
             returnImage.setUrl(image.getUrl());
+            returnImages.add(returnImage);
         }
 
         post.setImages(returnImages);
