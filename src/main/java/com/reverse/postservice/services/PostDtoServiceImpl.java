@@ -68,7 +68,7 @@ public class PostDtoServiceImpl implements PostDtoService{
         post.setLastEdited(Instant.now());
         Log.getLog().debug("Calling postCreationDao.save from createPost in PostDtoServiceImpl.");
         PostCreationDto saved = this.postCreationDao.save(post);
-        imageService.addImagesToBucket(post.getImages(), (long) post.getPosterId(), saved.getId());
+        //imageService.addImagesToBucket(post.getImages(), (long) post.getPosterId(), saved.getId());
         Log.getLog().debug("postCreationDao.save successful.");
     }
 
