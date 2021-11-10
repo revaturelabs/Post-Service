@@ -2,6 +2,7 @@ package com.reverse.postservice.controllers;
 
 import com.reverse.postservice.exceptions.InvalidJwtException;
 import com.reverse.postservice.models.Like;
+import com.reverse.postservice.models.LikeId;
 import com.reverse.postservice.models.dto.FullPost;
 import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.services.PostDtoService;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 
 public class PostControllerTest {
@@ -190,5 +192,14 @@ public class PostControllerTest {
         ResponseEntity<List<Post>> response = testPostController.getUserPosts(1,"");
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void unlikePostSucceedTest() {
+        Like like = mock(Like.class);
+        like.setLikeId(new LikeId(1,1));
+
+        testPostController.unlike(1,1, "");
+        verify(mockPostService).unlikePost(any());
     }
 }

@@ -11,19 +11,20 @@ import java.time.Instant;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PostServiceTest {
 
     private PostService testPostService;
     private PostDao mockPostDao;
+    private LikeDao mockLikeDao;
+    private CommentDao mockCommentDao;
 
     @BeforeEach
     public void init() {
         mockPostDao = mock(PostDao.class);
-        CommentDao mockCommentDao = mock(CommentDao.class);
-        LikeDao mockLikeDao = mock(LikeDao.class);
+        mockCommentDao = mock(CommentDao.class);
+        mockLikeDao = mock(LikeDao.class);
         testPostService = new PostServiceImpl(mockPostDao, mockLikeDao, mockCommentDao);
 
     }
@@ -106,5 +107,12 @@ public class PostServiceTest {
 
     @Test
     void updatePost() {
+    }
+
+    @Test
+    void unlikePostSuccess(){
+        Like like = new Like(new LikeId(1,1));
+        testPostService.unlikePost(like);
+        verify(mockLikeDao).delete(like);
     }
 }

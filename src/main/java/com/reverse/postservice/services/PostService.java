@@ -28,6 +28,12 @@ public interface PostService {
     void likePost(Like like);
 
     /**
+     * Unlike a post.
+     * @param like A Like object which contains the post Id to be unliked and the user Id of the user who unliked the post.
+     */
+    void unlikePost(Like like);
+
+    /**
      * Update a post with new information.
      * @param post New post information.
      */

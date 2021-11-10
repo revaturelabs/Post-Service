@@ -1,5 +1,6 @@
 package com.reverse.postservice.controllers;
 
+import com.reverse.postservice.models.LikeId;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.Like;
 import com.reverse.postservice.models.dto.FullPost;
@@ -267,6 +268,29 @@ public class PostController {
             Log.getLog().error("Exception caught from getUserPosts in PostController.");
             Log.getLog().error(e);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/unlike/{postId}/{userId}")
+    public ResponseEntity unlike(@PathVariable(name="postId") int postId, @PathVariable(name="userId") int userId, @RequestHeader(name="Authorization") String token){
+        Log.getLog().debug("Unliking post from likePost in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
+        try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from unlikePost in PostController.");
+            validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postService.unlikePost from unlikePost in PostController.");
+            Like toDelete = new Like(new LikeId(postId,userId));
+            toDelete.setLikeId(new LikeId(postId,userId));
+            postService.unlikePost(toDelete);
+            Log.getLog().debug("postService.unlikePost successful.");
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            Log.getLog().fatal("Exception caught from unlikePost in PostController.");
+            Log.getLog().fatal(e);
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
