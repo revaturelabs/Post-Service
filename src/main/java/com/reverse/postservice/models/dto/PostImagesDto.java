@@ -31,11 +31,8 @@ public class PostImagesDto {
     @JoinColumn(name = "bucket", nullable = false)
     private ImageLocation bucket;
 
-<<<<<<< Updated upstream
-=======
     @Generated
     public String getUrl(){
         return "https://"+bucket.getBucketName()+".s3.amazonaws.com/"+imageName;
     }
->>>>>>> Stashed changes
 }

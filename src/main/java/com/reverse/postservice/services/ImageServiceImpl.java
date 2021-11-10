@@ -10,7 +10,7 @@ import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.PostImage;
 import com.reverse.postservice.models.dto.ImageDto;
 import com.reverse.postservice.repositories.ImageDao;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Setter;
 import lombok.Generated;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -22,24 +22,25 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
 public class ImageServiceImpl implements ImageService{
 
     private ImageDao imageDao;
+    private PostService postService;
 
     @Autowired
     @Generated
-    public void setImageDao(ImageDao dao){
+    public void setImageDao(ImageDao dao, PostService postService){
         this.imageDao = dao;
+        this.postService = postService;
     }
 
 
     @Override
     @Generated
-    public List<PostImage> addImagesToBucket(List<ImageDto> imageDtos, Long userId) {
+    public List<PostImage> addImagesToBucket(List<ImageDto> imageDtos, Long userId, Integer postId) {
 
         //Note: none of this should be hardcoded
         //      sadly, it is. Fix later
@@ -59,6 +60,7 @@ public class ImageServiceImpl implements ImageService{
 
         List<PostImage> createdImages = new ArrayList<>();
         Long now = Instant.now().toEpochMilli();
+        Post relatedPost = postService.getPostById(postId);
 
         int count = 0;
         for(ImageDto imgDto : imageDtos){
@@ -82,6 +84,7 @@ public class ImageServiceImpl implements ImageService{
 
             // Add image to the database
             PostImage image = new PostImage();
+            image.setPost(relatedPost);
             image.setImageTitle(imgDto.getImageTitle());
             image.setImageName(imageName);
             image.setBucket(bucket);
