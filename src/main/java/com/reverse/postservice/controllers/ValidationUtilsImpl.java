@@ -18,6 +18,13 @@ public class ValidationUtilsImpl implements ValidationUtils{
 
     private static final String validationAddress = System.getenv("VALIDATION");
 
+    //private WebClient client;
+
+    //@Autowired
+    //public ValidationUtilsImpl(WebClient webClient){
+    //    this.client = webClient;
+    //}
+
     public void validateJwt(String token) throws InvalidJwtException {
         token = token.split("Bearer ")[1];
 
