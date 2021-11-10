@@ -40,7 +40,7 @@ public class PostControllerTest {
         PostCreationDto post = mock(PostCreationDto.class);
 
         ResponseEntity response = testPostController.createPost(post, "");
-        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PostControllerTest {
         when(testPostController.createPost(post, "")).thenThrow(new NullPointerException());
 
         ResponseEntity response = testPostController.createPost(post, "");
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PostControllerTest {
         ResponseEntity<FullPost> response = testPostController.getPost(1, "");
 
         assertEquals(post, response.getBody());
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class PostControllerTest {
         when(mockPostDtoService.getPostById(1)).thenReturn(null);
         ResponseEntity<FullPost> response = testPostController.getPost(1, "");
 
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PostControllerTest {
         try {
             doThrow(new InvalidJwtException("Invalid jwt")).when(mockValidationUtils).validateJwt("");
             ResponseEntity response = testPostController.getPost(1, "");
-            assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+            assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         } catch (Exception e) {
 
         }
@@ -89,7 +89,7 @@ public class PostControllerTest {
 
         ResponseEntity response = testPostController.likePost(like, "");
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class PostControllerTest {
         when(testPostController.likePost(like, "")).thenThrow(new NullPointerException());
         ResponseEntity response = testPostController.likePost(like, "");
 
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class PostControllerTest {
 
         ResponseEntity response = testPostController.editPost(post, "");
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -118,13 +118,13 @@ public class PostControllerTest {
         when(testPostController.editPost(post, "")).thenThrow(new NullPointerException());
         ResponseEntity response = testPostController.editPost(post, "");
 
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
     public void deletePostSucceedTest() {
         ResponseEntity response = testPostController.deletePost(1, "");
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class PostControllerTest {
         when(testPostController.deletePost(1, "")).thenThrow(new NullPointerException());
 
         ResponseEntity response = testPostController.deletePost(1, "");
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class PostControllerTest {
         ResponseEntity<List<Post>> response = testPostController.getAllPosts("");
 
         assertEquals(post, response.getBody().get(0));
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class PostControllerTest {
         when(testPostController.getAllPosts("")).thenThrow(new NullPointerException());
         ResponseEntity<List<Post>> response = testPostController.getAllPosts("");
 
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class PostControllerTest {
         ResponseEntity<List<Post>> response = testPostController.getRecentPosts(1,"");
 
         assertEquals(post, response.getBody().get(0));
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -170,7 +170,7 @@ public class PostControllerTest {
         when(testPostController.getRecentPosts(1,"")).thenThrow(new NullPointerException());
         ResponseEntity<List<Post>> response = testPostController.getRecentPosts(1,"");
 
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -181,7 +181,7 @@ public class PostControllerTest {
         ResponseEntity<List<Post>> response = testPostController.getUserPosts(1,"");
 
         assertEquals(post, response.getBody().get(0));
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -189,6 +189,6 @@ public class PostControllerTest {
         when(testPostController.getUserPosts(1,"")).thenThrow(new NullPointerException());
         ResponseEntity<List<Post>> response = testPostController.getUserPosts(1,"");
 
-        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
