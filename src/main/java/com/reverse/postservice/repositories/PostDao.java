@@ -11,5 +11,7 @@ import java.util.List;
 @Repository
 public interface PostDao extends JpaRepository<Post, Integer> {
     List<Post> findAllByBodyNotNullOrderByLastEdited();
+    List<Post> findAllByBodyNotNullOrderByCreatedDesc();
+
     List<Post> findAllByPoster_IdOrderByCreated(int userID);
 }
