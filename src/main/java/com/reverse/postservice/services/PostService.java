@@ -2,6 +2,7 @@ package com.reverse.postservice.services;
 
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.Like;
+import com.reverse.postservice.models.User;
 
 import java.util.List;
 
@@ -53,8 +54,14 @@ public interface PostService {
 
     /**
      * Get the most recently created posts.
-     * @param days Time frame of how old the posts must be to be included.
+     * @param number how many posts to include
      * @return A list of posts.
      */
-    List<Post> getRecent(int days);
+    List<Post> getRecent(int number);
+
+    /**
+     * Gets all of a user's posts
+     * @return
+     */
+    List<Post> getUserPosts(int userID);
 }
