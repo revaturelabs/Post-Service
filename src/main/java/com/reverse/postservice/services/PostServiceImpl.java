@@ -154,8 +154,4 @@ public class PostServiceImpl implements PostService{
     public List<Post> getUserPosts(int userID) {
         return postDao.findAllByPoster_IdOrderByCreated(userID);
     }
-
-    //    private Long daysToMilliseconds(int days){
-//        return (long) days * 86400000;
-//    }
 }
