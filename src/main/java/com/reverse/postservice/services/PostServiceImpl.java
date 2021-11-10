@@ -147,7 +147,7 @@ public class PostServiceImpl implements PostService{
      * @return A list of posts.
      */
     public List<Post> getRecent(int number){
-        List<Post> posts = postDao.findAllByBodyNotNullOrderByLastEdited();
+        List<Post> posts = postDao.findAllByBodyNotNullOrderByCreatedDesc();
         return posts.size() >= number?posts.subList(0,number):posts;
     }
 
