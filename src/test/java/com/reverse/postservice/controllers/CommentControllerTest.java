@@ -1,5 +1,6 @@
 package com.reverse.postservice.controllers;
 
+import com.reverse.postservice.exceptions.InvalidJwtException;
 import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.services.CommentService;
@@ -13,8 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CommentControllerTest {
 
@@ -74,5 +74,16 @@ public class CommentControllerTest {
         when(mockCommentService.getAllCommentsOnPost(1)).thenReturn(new ArrayList<>());
         ResponseEntity response = testCommentController.getAllCommentsOnPost(1, "");
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void getAllCommentsOnPostValidationFailTest() {
+        try {
+            doThrow(new InvalidJwtException("invalid jwt")).when(mockValidationUtils).validateJwt("");
+            ResponseEntity response = testCommentController.getAllCommentsOnPost(1, "");
+            assertEquals(response.getStatusCode(), HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+
+        }
     }
 }

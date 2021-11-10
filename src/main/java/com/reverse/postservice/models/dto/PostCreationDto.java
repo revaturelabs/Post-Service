@@ -35,4 +35,5 @@ public class PostCreationDto {
 
     @Transient
     private List<ImageReturnDto> images;
+
 }

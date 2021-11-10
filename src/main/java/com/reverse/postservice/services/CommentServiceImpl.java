@@ -4,6 +4,7 @@ import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.dto.CommentCreationDto;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.dto.CommentCreationRepo;
+import com.reverse.postservice.tools.Log;
 import lombok.Generated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,12 @@ public class CommentServiceImpl implements CommentService{
      */
     @Override
     public void commentOnPost(CommentCreationDto comment) {
+        Log.getLog().debug("Commenting on post from commentOnPost in CommentServiceImpl.");
+
         comment.setCreated(Instant.now());
+        Log.getLog().debug("Calling commentCreationRepo.save from commentOnPost in CommentServiceImpl.");
         this.commentCreationRepo.save(comment);
+        Log.getLog().debug("commentCreationRepo.save successful.");
     }
 
     /**
@@ -40,7 +45,10 @@ public class CommentServiceImpl implements CommentService{
      */
     @Override
     public void deleteComment(int commentId) {
+        Log.getLog().debug("Deleting comment id " + commentId + " from deleteComment in CommentServiceImpl.");
+        Log.getLog().debug("Calling commentDao.deleteById from deleteComment in CommentServiceImpl.");
         commentDao.deleteById(commentId);
+        Log.getLog().debug("commentDao.deleteById successful.");
     }
 
     /**
@@ -50,7 +58,11 @@ public class CommentServiceImpl implements CommentService{
      */
     @Override
     public List<Comment> getAllCommentsOnPost(int postId) {
-        return commentDao.getCommentsByPost_Id(postId);
+        Log.getLog().debug("Getting all comments on post id " + postId + " from getAllCommentsOnPost in CommentServiceImpl.");
+        Log.getLog().debug("Calling commentDao.getCommentsByPost_Id from getAllCommentsOnPost in CommentServiceImpl.");
+        List<Comment> comments = commentDao.getCommentsByPost_Id(postId);
+        Log.getLog().debug("commentDao.getCommentsByPost_Id successful.");
+        return comments;
     }
 
 }

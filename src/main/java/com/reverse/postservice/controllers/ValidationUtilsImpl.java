@@ -2,6 +2,7 @@ package com.reverse.postservice.controllers;
 
 import com.reverse.postservice.exceptions.InvalidJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,8 @@ public class ValidationUtilsImpl implements ValidationUtils{
     private static final String validationAddress = System.getenv("VALIDATION");
 
     public void validateJwt(String token) throws InvalidJwtException {
+        token = token.split("Bearer ")[1];
+
         log.debug(validationAddress);
 
         WebClient client = WebClient.create();
