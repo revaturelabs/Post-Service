@@ -7,24 +7,12 @@ import com.reverse.postservice.models.dto.PostCreationDto;
 import com.reverse.postservice.services.PostDtoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.services.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,7 +40,7 @@ public class PostControllerTest {
         PostCreationDto post = mock(PostCreationDto.class);
 
         ResponseEntity response = testPostController.createPost(post, "");
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
     @Test
@@ -166,4 +154,41 @@ public class PostControllerTest {
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
+    @Test
+    public void getRecentPostsSuccessTest(){
+        Post post = mock(Post.class);
+
+        when(mockPostService.getRecent(1)).thenReturn(Collections.singletonList(post));
+        ResponseEntity<List<Post>> response = testPostController.getRecentPosts(1,"");
+
+        assertEquals(post, response.getBody().get(0));
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void getRecentPostsFailTest(){
+        when(testPostController.getRecentPosts(1,"")).thenThrow(new NullPointerException());
+        ResponseEntity<List<Post>> response = testPostController.getRecentPosts(1,"");
+
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void getUserPostsSuccessTest(){
+        Post post = mock(Post.class);
+
+        when(mockPostService.getUserPosts(1)).thenReturn(Collections.singletonList(post));
+        ResponseEntity<List<Post>> response = testPostController.getUserPosts(1,"");
+
+        assertEquals(post, response.getBody().get(0));
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void getUserPostsFailTest(){
+        when(testPostController.getUserPosts(1,"")).thenThrow(new NullPointerException());
+        ResponseEntity<List<Post>> response = testPostController.getUserPosts(1,"");
+
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
 }
