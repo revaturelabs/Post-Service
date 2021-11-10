@@ -2,6 +2,7 @@ package com.reverse.postservice.services;
 
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.Like;
+import com.reverse.postservice.models.User;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
@@ -142,15 +143,16 @@ public class PostServiceImpl implements PostService{
 
     /**
      * Get the most recently created posts.
-     * @param days Time frame of how old the posts must be to be included.
+     * @param number how many posts to return
      * @return A list of posts.
      */
-    public List<Post> getRecent(int days){
-        //172,800,000 is the number of milliseconds in 48 hours
-        return null;//postDao.getPostsByCreatedAfterOrderByCreated(Instant.ofEpochMilli(System.currentTimeMillis() - daysToMilliseconds(days)));
+    public List<Post> getRecent(int number){
+        List<Post> posts = postDao.findAllByBodyNotNullOrderByCreatedDesc();
+        return posts.size() >= number?posts.subList(0,number):posts;
     }
 
-//    private Long daysToMilliseconds(int days){
-//        return (long) days * 86400000;
-//    }
+    @Override
+    public List<Post> getUserPosts(int userID) {
+        return postDao.findAllByPoster_IdOrderByCreated(userID);
+    }
 }

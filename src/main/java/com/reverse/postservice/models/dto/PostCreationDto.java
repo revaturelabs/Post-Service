@@ -34,5 +34,5 @@ public class PostCreationDto {
     private Instant lastEdited;
 
     @Transient
-    private List<ImageCreationDto> images;
+    private List<ImageDto> images;
 }

@@ -65,8 +65,6 @@ public class PostController {
             Log.getLog().debug("validationUtils.validateJwt completed.");
 
             Log.getLog().debug("Calling postDtoService.createPost from createPost in PostController.");
-            validationUtils.validateJwt(token.split("Bearer ")[1]);
-            validationUtils.validateJwt(token);
 
             postDtoService.createPost(post);
             Log.getLog().debug("postDtoService.createPost successful.");
@@ -213,6 +211,60 @@ public class PostController {
             return ResponseEntity.ok().body(posts);
         } catch (Exception e) {
             Log.getLog().error("Exception caught from getAllPosts in PostController.");
+            Log.getLog().error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Get a specified number of recent posts from the database.
+     * @return Represents the HTTP response.
+     */
+    @GetMapping("/recent/{number}")
+    public ResponseEntity<List<Post>> getRecentPosts(@PathVariable(name="number") int number, @RequestHeader (name="Authorization") String token){
+        Log.getLog().debug("Getting recent posts from getAllPosts in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
+        List<Post> posts;
+
+        try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from getRecentPosts in PostController.");
+            validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postService.getRecent from getRecentPosts in PostController.");
+            posts = postService.getRecent(number);
+            Log.getLog().debug("postService.getRecent successful.");
+            return ResponseEntity.ok().body(posts);
+        } catch (Exception e) {
+            Log.getLog().error("Exception caught from getRecentPosts in PostController.");
+            Log.getLog().error(e);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Get all of a specified user's posts from the database.
+     * @return Represents the HTTP response.
+     */
+    @GetMapping("/byUser/{number}")
+    public ResponseEntity<List<Post>> getUserPosts(@PathVariable(name="number") int userID, @RequestHeader (name="Authorization") String token){
+        Log.getLog().debug("Getting all posts from getUserPosts in PostController.");
+        Log.getLog().debug("Authorization Token: " + token);
+
+        List<Post> posts;
+
+        try {
+            Log.getLog().debug("Calling validationUtils.validateJwt from getUserPosts in PostController.");
+            validationUtils.validateJwt(token);
+            Log.getLog().debug("validationUtils.validateJwt completed.");
+
+            Log.getLog().debug("Calling postService.getUserPosts from getUserPosts in PostController.");
+            posts = postService.getUserPosts(userID);
+            Log.getLog().debug("postService.getUserPosts successful.");
+            return ResponseEntity.ok().body(posts);
+        } catch (Exception e) {
+            Log.getLog().error("Exception caught from getUserPosts in PostController.");
             Log.getLog().error(e);
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
