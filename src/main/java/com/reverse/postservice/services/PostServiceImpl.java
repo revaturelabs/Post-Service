@@ -2,6 +2,7 @@ package com.reverse.postservice.services;
 
 import com.reverse.postservice.models.Post;
 import com.reverse.postservice.models.Like;
+import com.reverse.postservice.models.User;
 import com.reverse.postservice.repositories.CommentDao;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.PostDao;
@@ -149,7 +150,12 @@ public class PostServiceImpl implements PostService{
         return postDao.findAllByBodyNotNullOrderByLastEdited().subList(0,number);
     }
 
-//    private Long daysToMilliseconds(int days){
+    @Override
+    public List<Post> getUserPosts(int userID) {
+        return postDao.findAllByPoster_IdOrderByCreated(userID);
+    }
+
+    //    private Long daysToMilliseconds(int days){
 //        return (long) days * 86400000;
 //    }
 }
