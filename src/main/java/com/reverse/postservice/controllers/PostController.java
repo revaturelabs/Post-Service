@@ -229,7 +229,7 @@ public class PostController {
 
         try {
             Log.getLog().debug("Calling validationUtils.validateJwt from getAllPosts in PostController.");
-            //validationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
             Log.getLog().debug("validationUtils.validateJwt completed.");
 
             Log.getLog().debug("Calling postService.getAllPosts from getAllPosts in PostController.");
@@ -256,7 +256,7 @@ public class PostController {
 
         try {
             Log.getLog().debug("Calling validationUtils.validateJwt from getAllPosts in PostController.");
-            //validationUtils.validateJwt(token);
+            validationUtils.validateJwt(token);
             Log.getLog().debug("validationUtils.validateJwt completed.");
 
             Log.getLog().debug("Calling postService.getAllPosts from getAllPosts in PostController.");
