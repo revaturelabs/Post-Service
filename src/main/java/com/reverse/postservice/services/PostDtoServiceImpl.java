@@ -1,7 +1,9 @@
 package com.reverse.postservice.services;
 
 import com.reverse.postservice.models.dto.FullPost;
+import com.reverse.postservice.models.dto.ImageReturnDto;
 import com.reverse.postservice.models.dto.PostCreationDto;
+import com.reverse.postservice.models.dto.PostImagesDto;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.dto.CommentDtoDao;
 import com.reverse.postservice.repositories.dto.FullPostDao;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service(value = "PostDtoService")
 public class PostDtoServiceImpl implements PostDtoService{
@@ -50,8 +54,17 @@ public class PostDtoServiceImpl implements PostDtoService{
 
         post.setLikes(this.likeDao.findAllUsersForPostId(postId)); //List of user ids who liked this post
         post.setComments(this.commentDao.findAllCommentsByPostId(postId));
-        post.setImages(this.postImagesDao.findAllPostImagesByPostId(postId));
 
+        List<PostImagesDto> images = this.postImagesDao.findAllPostImagesByPostId(postId);
+        List<ImageReturnDto> returnImages = new ArrayList<>();
+
+        for(PostImagesDto image : images){
+            ImageReturnDto returnImage = new ImageReturnDto();
+            returnImage.setFilename(image.getImageTitle());
+            returnImage.setUrl(image.getUrl());
+        }
+
+        post.setImages(returnImages);
         return post;
     }
 
