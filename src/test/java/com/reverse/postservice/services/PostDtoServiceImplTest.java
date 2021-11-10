@@ -3,10 +3,7 @@ package com.reverse.postservice.services;
 import com.reverse.postservice.models.Comment;
 import com.reverse.postservice.models.Like;
 import com.reverse.postservice.models.Post;
-import com.reverse.postservice.models.dto.CommentDto;
-import com.reverse.postservice.models.dto.FullPost;
-import com.reverse.postservice.models.dto.PostCreationDto;
-import com.reverse.postservice.models.dto.PostImagesDto;
+import com.reverse.postservice.models.dto.*;
 import com.reverse.postservice.repositories.LikeDao;
 import com.reverse.postservice.repositories.dto.CommentDtoDao;
 import com.reverse.postservice.repositories.dto.FullPostDao;
@@ -51,19 +48,22 @@ class PostDtoServiceImplTest {
         List<CommentDto> commentList = new ArrayList<>();
         commentList.add(comment);
 
-        PostImagesDto postImage = new PostImagesDto();
-        List<PostImagesDto> postImagesDtoList = new ArrayList<>();
+        ImageReturnDto postImage = new ImageReturnDto();
+        PostImagesDto fullPostImage = new PostImagesDto();
+
+        List<ImageReturnDto> postImagesDtoList = new ArrayList<>();
         postImagesDtoList.add(postImage);
+        List<PostImagesDto> fullPostImageList = new ArrayList<>();
+        fullPostImageList.add(fullPostImage);
 
         FullPost post = new FullPost();
-        //post.setNumberOfLikes(12L);
         post.setComments(commentList);
         post.setImages(postImagesDtoList);
 
         when(fullPostDao.findById(1)).thenReturn(java.util.Optional.of(post));
         when(likeDao.countByLikeId_PostId(1)).thenReturn(12L);
         when(commentDao.findAllCommentsByPostId(1)).thenReturn(commentList);
-        when(postImagesDao.findAllPostImagesByPostId(1)).thenReturn(postImagesDtoList);
+        when(postImagesDao.findAllPostImagesByPostId(1)).thenReturn(fullPostImageList);
 
         FullPost postRetrieved = postDtoService.getPostById(1);
         assertEquals(post, postRetrieved);
