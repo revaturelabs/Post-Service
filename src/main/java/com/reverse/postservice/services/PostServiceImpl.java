@@ -142,12 +142,11 @@ public class PostServiceImpl implements PostService{
 
     /**
      * Get the most recently created posts.
-     * @param days Time frame of how old the posts must be to be included.
+     * @param number how many posts to return
      * @return A list of posts.
      */
-    public List<Post> getRecent(int days){
-        //172,800,000 is the number of milliseconds in 48 hours
-        return null;//postDao.getPostsByCreatedAfterOrderByCreated(Instant.ofEpochMilli(System.currentTimeMillis() - daysToMilliseconds(days)));
+    public List<Post> getRecent(int number){
+        return postDao.findAllByBodyNotNullOrderByLastEdited().subList(0,number);
     }
 
 //    private Long daysToMilliseconds(int days){

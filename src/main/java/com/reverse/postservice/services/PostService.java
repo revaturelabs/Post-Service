@@ -53,8 +53,8 @@ public interface PostService {
 
     /**
      * Get the most recently created posts.
-     * @param days Time frame of how old the posts must be to be included.
+     * @param number how many posts to include
      * @return A list of posts.
      */
-    List<Post> getRecent(int days);
+    List<Post> getRecent(int number);
 }
