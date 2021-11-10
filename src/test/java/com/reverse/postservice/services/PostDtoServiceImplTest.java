@@ -31,6 +31,7 @@ class PostDtoServiceImplTest {
     private static CommentDtoDao commentDao;
     private static PostImagesDtoDao postImagesDao;
     private static LikeDao likeDao;
+    private static ImageService imageService;
 
     @BeforeAll
     static void setUp() {
@@ -39,8 +40,9 @@ class PostDtoServiceImplTest {
         commentDao = mock(CommentDtoDao.class);
         postImagesDao = mock(PostImagesDtoDao.class);
         likeDao = mock(LikeDao.class);
+        imageService = mock(ImageService.class);
 
-        postDtoService = new PostDtoServiceImpl(fullPostDao, postCreationDao, commentDao, postImagesDao, likeDao);
+        postDtoService = new PostDtoServiceImpl(fullPostDao, postCreationDao, commentDao, postImagesDao, likeDao,imageService);
 
     }
 
