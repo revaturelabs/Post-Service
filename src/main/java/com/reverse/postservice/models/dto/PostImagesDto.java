@@ -1,10 +1,7 @@
 package com.reverse.postservice.models.dto;
 
 import com.reverse.postservice.models.ImageLocation;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -33,4 +30,13 @@ public class PostImagesDto {
     @ManyToOne(optional = false)
     @JoinColumn(name = "bucket", nullable = false)
     private ImageLocation bucket;
+
+    @Generated
+    public String getUrl() {
+        try {
+            return "https://" + bucket.getBucketName() + ".s3.amazonaws.com/" + imageName;
+        }catch(NullPointerException e){
+            return "";
+        }
+    }
 }

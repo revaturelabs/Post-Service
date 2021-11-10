@@ -48,5 +48,5 @@ public class FullPost {
     private List<CommentDto> comments;
 
     @Transient
-    private List<PostImagesDto> images;
+    private List<ImageReturnDto> images;
 }

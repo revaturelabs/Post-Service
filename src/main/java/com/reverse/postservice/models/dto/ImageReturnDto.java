@@ -9,9 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageCreationDto {
-
+public class ImageReturnDto {
     private String filename;
-
-    private String base64;
+    private String url;
 }
