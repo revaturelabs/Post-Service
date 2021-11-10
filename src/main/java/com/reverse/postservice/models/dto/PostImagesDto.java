@@ -33,5 +33,4 @@ public class PostImagesDto {
     @ManyToOne(optional = false)
     @JoinColumn(name = "bucket", nullable = false)
     private ImageLocation bucket;
-
 }

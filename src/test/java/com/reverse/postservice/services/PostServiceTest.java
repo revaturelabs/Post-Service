@@ -97,7 +97,7 @@ public class PostServiceTest {
     @Test
     void getRecent() {
         List<Post> posts = testPostService.getRecent(1);
-        assertNull(posts);
+        assertEquals(0, posts.size());
     }
 
     @Test

@@ -22,15 +22,17 @@ public class PostDtoServiceImpl implements PostDtoService{
     private CommentDtoDao commentDao;
     private PostImagesDtoDao postImagesDao;
     private LikeDao likeDao;
+    private ImageService imageService;
 
     @Autowired
     @Generated
-    public PostDtoServiceImpl(FullPostDao fullPostDao, PostCreationRepo postCreationDao, CommentDtoDao commentDao, PostImagesDtoDao postImagesDao, LikeDao likeDao) {
+    public PostDtoServiceImpl(FullPostDao fullPostDao, PostCreationRepo postCreationDao, CommentDtoDao commentDao, PostImagesDtoDao postImagesDao, LikeDao likeDao, ImageService imageService) {
         this.fullPostDao = fullPostDao;
         this.postCreationDao = postCreationDao;
         this.commentDao = commentDao;
         this.postImagesDao = postImagesDao;
         this.likeDao = likeDao;
+        this.imageService = imageService;
     }
 
     /**
@@ -65,7 +67,10 @@ public class PostDtoServiceImpl implements PostDtoService{
         post.setCreated(Instant.now());
         post.setLastEdited(Instant.now());
         Log.getLog().debug("Calling postCreationDao.save from createPost in PostDtoServiceImpl.");
-        this.postCreationDao.save(post);
+        PostCreationDto saved = this.postCreationDao.save(post);
+        if(post.getImages() != null) {
+            imageService.addImagesToBucket(post.getImages(), (long) post.getPosterId(), saved.getId());
+        }
         Log.getLog().debug("postCreationDao.save successful.");
     }
 
