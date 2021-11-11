@@ -1,4 +1,4 @@
-Getting Started with Post-Service
+# Getting Started with Post-Service
 
 1. Install and run Discovery (unless you want to temporarily disable self-registration by modifying the YAML config and removing the Eureka dependency in the POM)
 
