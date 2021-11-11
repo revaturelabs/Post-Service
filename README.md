@@ -1,3 +1,23 @@
+# Post Service
+
+## Overview
+
+Post Service is responsible for handling posts and related content, including images. It handles the things that a user *does*, including the CRUD of posts, but also the modification of post meta-data such as likes. Requests made to the Post Service are authenticated by a call to User Service validation.
+
+## Technologies
+
+Java
+Spring Boot
+Spring Web
+Spring WebFlux
+Spring Data JPA
+Log4J
+Netflix Eureka
+JUnit4
+Mockito
+Lombok
+Hibernate
+
 # Getting Started with Post-Service
 
 1. Install and run Discovery (unless you want to temporarily disable self-registration by modifying the YAML config and removing the Eureka dependency in the POM)
