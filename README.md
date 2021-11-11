@@ -6,17 +6,17 @@ Post Service is responsible for handling posts and related content, including im
 
 ## Technologies
 
-Java
-Spring Boot
-Spring Web
-Spring WebFlux
-Spring Data JPA
-Log4J
-Netflix Eureka
-JUnit4
-Mockito
-Lombok
-Hibernate
+- Java
+- Spring Boot
+- Spring Web
+- Spring WebFlux
+- Spring Data JPA
+- Log4J
+- Netflix Eureka
+- JUnit4
+- Mockito
+- Lombok
+- Hibernate
 
 # Getting Started with Post-Service
 
