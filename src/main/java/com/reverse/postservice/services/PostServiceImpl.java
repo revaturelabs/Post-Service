@@ -82,6 +82,16 @@ public class PostServiceImpl implements PostService{
         Log.getLog().debug("likeDao.save successful.");
     }
 
+    @Override
+    public void unlikePost(Like like) {
+        Log.getLog().debug("Unliking post from unlikePost in PostServiceImpl.");
+
+        Log.getLog().debug("Calling likeDao.save from unlikePost in PostServiceImpl.");
+        this.likeDao.delete(like);
+        Log.getLog().debug("likeDao.delete successful.");
+    }
+
+
     /**
      * Update a post with new information.
      * @param post New post information.
