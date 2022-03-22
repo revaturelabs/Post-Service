@@ -17,7 +17,7 @@ spec:
       - image: javasre2022/postservice:latest
         env:
           - name: VALIDATION
-            value: http://34.71.225.31:8081/users/validate
+            value: http://34.121.99.46:8081/users/validate
           - name: EUREKA_URI
             value: http://35.239.70.25:8083/eureka
           - name: ANGULAR_URI
