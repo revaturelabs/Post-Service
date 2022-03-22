@@ -36,6 +36,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/posts") //This being posts syncs with the current implementation of the gateway
+@CrossOrigin(origins = "*")
 public class PostController {
 
     PostService postService;

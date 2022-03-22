@@ -5,14 +5,20 @@ spring:
   application:
     name: 'post-service'
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: ${DB_URL:jdbc:postgresql://35.193.21.173:5432/postgres}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:Password123!}
     driver-class-name: org.postgresql.Driver
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
 
-validationServer: ${VALIDATION:http://localhost:8084/users/validation}
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${EUREKA_URI:http://localhost:8083/eureka}
+
+validationServer: ${VALIDATION}
