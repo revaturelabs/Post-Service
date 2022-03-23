@@ -26,17 +26,11 @@ pipeline {
         steps {
             script {
               sh "docker login -u javasre2022 -p 7ce357ae-b369-4a7d-876c-10d27cf1171e"
+              sh "dockerImage.push("$currentBuild.number")"
               sh "docker push javasre2022/postservice:latest"
             }
         }
     }
-
-        stage('SRE Approval') {
-          steps {
-            sh 'mvn --version'
-          }
-        }
-
          stage('Checkout') {
           steps {
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'ghp', url: 'https://github.com/revaturelabs/Post-Service']]])
@@ -53,6 +47,26 @@ pipeline {
                  } 
            } 
         }
+         stage('Wait for approval') {
+        when {
+            branch 'main'
+        }
+        steps {
+            script {
+                try {
+                    timeout(time: 5, unit: 'MINUTES') {
+                        approved = input message: 'Deploy to production?', ok: 'Continue',
+                                           parameters: [choice(name: 'approved', choices: 'Yes\nNo', description: 'Deploy build to production')]
+                        if(approved != 'Yes') {
+                            error('Build did not pass approval')
+                        }
+                    }
+                } catch(error) {
+                    error('Build failed because timeout was exceeded')
+                }
+            }
+        }
+    }
 
         stage('DeployToCluster') {
           steps {
