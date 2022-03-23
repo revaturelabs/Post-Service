@@ -54,7 +54,7 @@ pipeline {
                  } 
            } 
         }
-         stage('Wait for approval') {
+       stage('Wait for approval') {
         when {
             branch 'master'
         }
