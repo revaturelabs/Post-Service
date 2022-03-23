@@ -30,11 +30,10 @@ pipeline {
         stage('Docker Deliver') {
         steps {
             script {
-              docker.withRegistry('', dockerHubCreds) {
-                sh "echo $currentBuild.number " 
-                dockerImage.push("$currentBuild.number")
-                dockerImage.push("latest")
-              }
+              sh "echo $currentBuild.number " 
+              sh "docker login -u javasre2022 -p 7ce357ae-b369-4a7d-876c-10d27cf1171e"
+              sh "docker push javasre2022/postservice:latest"
+              sh "docker push javasre2022/postservice:$currentBuild.number"
             }
         }
     }
