@@ -25,7 +25,7 @@ pipeline {
         stage('Docker Deliver') {
         steps {
             script {
-              sh "docker login -u javaSRE2022 -p 7ce357ae-b369-4a7d-876c-10d27cf1171e"
+              sh "docker login -u javasre2022 -p 7ce357ae-b369-4a7d-876c-10d27cf1171e"
               sh "docker push javasre2022/postservice:latest"
             }
         }
