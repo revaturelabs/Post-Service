@@ -58,7 +58,7 @@ spec:
     matchLabels:
       app: postservice-service
   endpoints:
-    - port: http-app1
+    - port: http-postservice
       path: "/actuator/prometheus"
 
 
