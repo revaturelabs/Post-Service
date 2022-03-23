@@ -47,9 +47,9 @@ pipeline {
           steps {    
                  script {
                     sh 'mvn clean verify sonar:sonar \
-                          -Dsonar.projectKey=Discovery \
-                          -Dsonar.host.url=http://35.222.177.228:9000 \
-                          -Dsonar.login=53c89b637656beca6c8886ba0eea07a324671493'
+                    -Dsonar.projectKey=Post-service \
+                    -Dsonar.host.url=http://35.222.177.228:9000 \
+                    -Dsonar.login=45499a6ff15b3dbf936db9278fc14e43ea283295'
                  } 
            } 
         }
