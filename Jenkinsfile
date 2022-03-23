@@ -31,6 +31,7 @@ pipeline {
         steps {
             script {
               docker.withRegistry('', dockerHubCreds) {
+                sh "echo $currentBuild.number " 
                 dockerImage.push("$currentBuild.number")
                 dockerImage.push("latest")
               }
