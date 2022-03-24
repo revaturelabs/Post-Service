@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project3-postservice-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: postservice-deployment
+      role: backend
+      env: canary
+  template:
+    metadata:
+      name: backend
+      labels:
+        app: postservice-deployment
+        role: backend
+        env: canary
+    spec:
+      containers:
+      - image: javasre2022/postservice:latest
+        env:
+          - name: VALIDATION
+            value: http://34.121.99.46:8081/users/validate
+          - name: EUREKA_URI
+            value: http://35.239.70.25:8083/eureka
+          - name: ANGULAR_URI
+            value: http://34.69.17.73:80
+          - name: AWS_ACCESS_KEY
+            value: AKIA4OK5FKIY3WZXH4XW
+          - name:  AWS_SECRET_KEY
+            value: 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
+        imagePullPolicy: Always
+        name: postservicecontainer
+        ports:
+        - containerPort: 8000
+
+
+
+
+
+
+
+
+
+
+
+
