@@ -12,6 +12,7 @@ spec:
       env: canary
   template:
     metadata:
+      name: backend
       labels:
         app: postservice-deployment
         role: backend
