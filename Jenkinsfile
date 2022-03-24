@@ -18,15 +18,13 @@ pipeline {
             sh 'mvn -f pom.xml clean package -DskipTests'
          }
        }
-
         stage('Docker Hub') {
           steps {
             script {
             sh "docker build -t javasre2022/postservice ."
             }
           }
-        }
-        
+        }     
         stage('Docker Deliver') {
         steps {
             script {
