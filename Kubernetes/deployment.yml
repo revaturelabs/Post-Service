@@ -33,7 +33,7 @@ spec:
             value: 9Vu70nlDxQmkiw4dk6wv2ejeKD9TgATOEEEFaxU9
         imagePullPolicy: Always
         name: postservicecontainer
-        ports: 
+        ports:
         - containerPort: 8000
 
 
@@ -52,6 +52,7 @@ spec:
       port: 8000
       targetPort: 8000
   selector:
+    role: backend
     app: postservice-deployment
 
 
