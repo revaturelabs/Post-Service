@@ -8,10 +8,14 @@ spec:
   selector:
     matchLabels:
       app: postservice-deployment
+      role: backend
+      env: canary
   template:
     metadata:
       labels:
         app: postservice-deployment
+        role: frontend
+        env: canary
     spec:
       containers:
       - image: javasre2022/postservice:latest
