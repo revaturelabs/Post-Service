@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         app: postservice-deployment
-        role: frontend
+        role: backend
         env: canary
     spec:
       containers:
